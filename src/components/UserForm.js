@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserForm = ({ action }) => {
+const UserForm = ({ type }) => {
   return (
     <div class="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
 
@@ -8,7 +8,7 @@ const UserForm = ({ action }) => {
 
         <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-            {`${action} user`}
+            {`${type} user`}
           </h3>
         </div>
 

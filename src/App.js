@@ -3,10 +3,10 @@ import Signup from './pages/Signup';
 import Home from './pages/Home';
 import Error from './pages/Error';
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from './pages/Dashboard';
 import { useState } from 'react';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import Dashboard from './pages/Dashboard';
 
 function App() {
 
@@ -28,8 +28,8 @@ function App() {
     isLogged ?
       {
         path: "/",
-        element: <Home />,
-        errorElement: <Error />,
+        element: <Dashboard handleLogout={handleLogout} />,
+        errorElement: <Error />
       }
       : {
         path: "/",

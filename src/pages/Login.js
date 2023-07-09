@@ -22,6 +22,7 @@ const Login = ({handleLogin}) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/session`, formData);
       handleLogin(response.data.tokenSession);
+      sessionStorage.setItem("user", JSON.stringify(response.data.user));
     } catch (error) {
       setError(true);
     }

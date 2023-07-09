@@ -1,14 +1,22 @@
 import React from 'react';
 import UserForm from '../components/UserForm';
 
-const getData = () => {
-  
+const getUserData = (userData) => {
+
 }
 
-const User = ({action}) => {
+const postUser = () => {
+
+}
+
+const patchUser = () => {
+
+}
+
+const User = ({ action }) => {
   return (
     <>
-      <UserForm action={action}/>
+      <UserForm type={action} />
     </>
   );
 };

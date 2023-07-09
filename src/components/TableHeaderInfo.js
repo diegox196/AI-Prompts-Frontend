@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TableHeaderInfo = ({ type }) => {
+const TableHeaderInfo = ({ type, onHandleNew }) => {
   return (
     <section className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 rounded-lg">
@@ -9,7 +9,7 @@ const TableHeaderInfo = ({ type }) => {
             <h1 className="text-lg mr-3 font-semibold dark:text-white">{`${type.charAt(0).toUpperCase()}${type.slice(1)}s`}</h1>
             <p className="text-gray-500 dark:text-gray-400">{`Manage all your existing ${type}s or add a new one`}</p>
           </div>
-          <button type="button"
+          <button type="button" onClick={onHandleNew}
             className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-2 -ml-1" viewBox="0 0 20 20" fill="currentColor"
               aria-hidden="true">
