@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import ViewUsers from './ViewUsers';
-import ViewPrompts from './ViewPrompts';
+//import ViewPrompts from './ViewPrompts';
 
 //<Prompt action={"Add"}/>
 

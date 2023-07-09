@@ -21,9 +21,9 @@ function PromptTable() {
     }
   };
 
-  const handleNewPrompt = () => {
+  /*const handleNewPrompt = () => {
     console.log(`New Prompt`);
-  };
+  };*/
 
   const handleView = (promptId) => {
     console.log(`View prompt with ID: ${promptId}`);
