@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function UserTable() {
+function UserTable({ handleClick }) {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -15,22 +15,6 @@ function UserTable() {
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
-  };
-
-  const handleNewUser = () => {
-    console.log(`New User`);
-  };
-
-  const handleView = (userId) => {
-    console.log(`View user with ID: ${userId}`);
-  };
-
-  const handleEdit = (userId) => {
-    console.log(`Edit user with ID: ${userId}`);
-  };
-
-  const handleDelete = (userId) => {
-    console.log(`Delete user with ID: ${userId}`);
   };
 
   return (
@@ -61,13 +45,13 @@ function UserTable() {
                   </span>
                 </td>
                 <td className="py-2 px-4 text-center">
-                  <button className="text-blue-500 mr-2" onClick={() => handleView(user._id)}>
+                  <button className="text-blue-500 mr-2" onClick={() => handleClick("View", user._id)}>
                     View
                   </button>
-                  <button className="text-blue-500 mr-2" onClick={() => handleEdit(user._id)}>
+                  <button className="text-blue-500 mr-2" onClick={() => handleClick("Edit", user._id)}>
                     Edit
                   </button>
-                  <button className="text-blue-500" onClick={() => handleDelete(user._id)}>
+                  <button className="text-blue-500" onClick={() => handleClick("Delete", user._id)}>
                     Delete
                   </button>
                 </td>
