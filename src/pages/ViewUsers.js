@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import TableHeaderInfo from '../components/TableHeaderInfo';
 import UserTable from '../components/UserTable';
-import CreateEditUser from '../pages/CreateEditUser';
+import CreateReadEditUser from './CreateReadEditUser';
 
 const ViewUsers = () => {
   const [isAllUser, setIsAllUser] = useState(true);
-
-  const handleNewUser = () => {
-    setIsAllUser(false);
-  }
-
   const [userId, setUserId] = useState("");
   let [typeAction, setTypeAction] = useState("Add new");
 
+  const goAllUsers = (go) => {
+    setIsAllUser(go);
+  }
+
+  const deleteUser = (id) => {
+    console.log(id);
+  }
 
   /**
    * Controls the actions of the table's view, edit and delete buttons and the user id
@@ -20,21 +22,24 @@ const ViewUsers = () => {
    * @param {string} type View - Edit - Delete
    * @param {string} id e35e12e5awd5awd
    */
-
   const handleClick = (type, id) => {
     setUserId(id);
     setTypeAction(type);
-    setIsAllUser(false);
+    if (type === 'Delete') {
+      deleteUser(id);
+    } else {
+      setIsAllUser(false);
+    }
   };
 
   return (
     <>
       {isAllUser ?
         <>
-          <TableHeaderInfo type={"user"} onHandleNew={handleNewUser} />
+          <TableHeaderInfo type={"user"} goAllUsers={goAllUsers} />
           <UserTable handleClick={handleClick} />
         </>
-        : <CreateEditUser action={typeAction} userId={userId} />
+        : <CreateReadEditUser action={typeAction} userId={userId} goAllUsers={goAllUsers} />
       }
     </>
   );

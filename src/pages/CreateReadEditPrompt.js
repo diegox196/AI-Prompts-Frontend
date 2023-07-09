@@ -1,7 +1,7 @@
 import React from 'react';
 import PromptForm from '../components/PromptForm';
 
-const User = ({action}) => {
+const CreateReadEditPrompt = ({action}) => {
   return (
     <>
       <PromptForm action={action}/>
@@ -9,4 +9,4 @@ const User = ({action}) => {
   );
 };
 
-export default User;
+export default CreateReadEditPrompt;

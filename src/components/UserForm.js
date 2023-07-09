@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import Alert from './Alert';
 
-const UserForm = ({ type, userData }) => {
+const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
 
   const [formData, setFormData] = useState(userData);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  //Control which components to show
+  const isViewMode = type === 'View';
+  const isCreateMode = type === 'Add new';
 
   useEffect(() => {
     setFormData(userData);
@@ -18,22 +24,33 @@ const UserForm = ({ type, userData }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validate empty fields
     const isEmptyField = Object.values(formData).some((value) => value === "");
-
-    if (formData.password === confirmPassword) {
-      console.log(formData.password + " && " + confirmPassword + " iguales");
+    if (isEmptyField) {
+      setErrorMessage("Please fill in all fields");
+      return;
     }
 
-    // Aquí puedes realizar la lógica para guardar los cambios del formulario
-    console.log(formData);
+    // Validate passwords
+    if (formData.password !== confirmPassword) {
+      setErrorMessage("Passwords do not match");
+      return;
+    }
+
+    const isSaved = await handleSave(formData);
+    if (isSaved.error) {
+      setErrorMessage(isSaved.error);
+    } else {
+      goAllUsers(true);
+    }
   };
 
-  const isViewMode = type === 'View';
-  const isCreateMode = type === 'Add new';
+  const viewAllUser = () => {
+    goAllUsers(true);
+  }
 
   return (
     <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
@@ -45,6 +62,7 @@ const UserForm = ({ type, userData }) => {
         </div>
 
         <form onSubmit={handleSubmit}>
+          {errorMessage !== '' && <Alert type={"Danger"} message={errorMessage} />}
           <div className="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
               <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
@@ -168,15 +186,22 @@ const UserForm = ({ type, userData }) => {
               </select>
             </div>
           </div>
-
-          {!isViewMode &&
+          <div className="flex space-x-4">
+            {!isViewMode &&
+              <button
+                type="submit"
+                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Save
+              </button>
+            }
             <button
-              type="submit"
-              className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Save
+              type="button"
+              onClick={viewAllUser}
+              className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+              Cancel
             </button>
-          }
+          </div>
         </form>
       </div>
     </div>
