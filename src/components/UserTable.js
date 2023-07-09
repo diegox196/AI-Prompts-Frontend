@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function Users() {
+function UserTable() {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function Users() {
       console.error('Error fetching user data:', error);
     }
   };
-  
+
   const handleNewUser = () => {
     console.log(`New User`);
   };
@@ -34,34 +34,28 @@ function Users() {
   };
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="flex justify-between items-center my-4">
-        <h1 className="text-3xl font-bold">User</h1>
-        <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={handleNewUser}>
-          New
-        </button>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full">
+    <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
+      <div className="overflow-x-auto shadow-md rounded-lg">
+        <table className="w-full bg-white dark:bg-gray-800 dark:text-white">
           <thead>
-            <tr className="bg-gray-200">
+            <tr className="bg-gray-50 dark:bg-gray-700 dark:text-gray-100">
               <th className="py-2 px-4">Name</th>
               <th className="py-2 px-4">Email</th>
               <th className="py-2 px-4">Status</th>
               <th className="py-2 px-4">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody  >
             {userData.map(user => (
-              <tr key={user._id} className="border-t border-gray-200">
-                <td className="py-2 px-4">{`${user.first_name} ${user.last_name}`}</td>
-                <td className="py-2 px-4">{user.email}</td>
+              <tr key={user._id} className="border-t border-gray-200 dark:border-gray-700">
+                <td className="py-2 px-4 text-center">{`${user.first_name} ${user.last_name}`}</td>
+                <td className="py-2 px-4 text-center">{user.email}</td>
                 <td className="py-2 px-4 text-center">
                   <span
-                    className={`py-1 px-2 rounded ${
-                      user.active ? 'border border-green-500 bg-green-100 text-green-500' : 'border border-yellow-500 bg-yellow-100 text-yellow-500'
-                    }`}
-                    style={{ borderRadius: '10px' }}
+                    className={`pb-0.5 px-1.5 rounded-lg text-sm font-medium ${user.active
+                      ? 'bg-green-100 text-green-800 dark:text-green-100 dark:bg-green-800'
+                      : 'bg-yellow-100 text-yellow-800 dark:text-yellow-100 dark:bg-yellow-800'
+                      }`}
                   >
                     {user.active ? 'Active' : 'Pending'}
                   </span>
@@ -86,4 +80,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default UserTable;

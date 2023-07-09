@@ -1,11 +1,16 @@
 import React from 'react';
-import Users from './Users';
+import TableHeaderInfo from '../components/TableHeaderInfo';
+import Dashboard from './Dashboard';
+
+
+/*<TableHeaderInfo type={"user"} />
+<TableHeaderInfo type={"promt"} />*/
 
 const Home = () => {
   return (
-    <div>
-      <Users/>
-    </div>
+    <>
+    <Dashboard/>
+    </>
   );
 };
 
