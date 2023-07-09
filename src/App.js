@@ -13,7 +13,6 @@ function App() {
 
   const handleLogin = (token) => {
     setIsLogged(true);
-    console.log(isLogged);
     sessionStorage.setItem('auth', token);
   };
 
@@ -22,12 +21,14 @@ function App() {
     sessionStorage.removeItem('auth');
   };
 
+  const isAdmin = true;
+
   const router = createBrowserRouter([
 
     isLogged ?
       {
         path: "/",
-        element: <Dashboard handleLogout={handleLogout} />,
+        element: <Dashboard handleLogout={handleLogout} typeView={"prompt"}/>,
         errorElement: <Error />
       }
       : {
@@ -40,8 +41,12 @@ function App() {
       element: <Signup />
     },
     {
-      path: "/dashboard",
-      element: <Dashboard />
+      path: "/prompt",
+      element: <Dashboard handleLogout={handleLogout} typeView={"prompt"} />
+    },
+    isAdmin && {
+      path: "/user",
+      element: <Dashboard handleLogout={handleLogout} typeView={"user"} />
     }
   ]);
 

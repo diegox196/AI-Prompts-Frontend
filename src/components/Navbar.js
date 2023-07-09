@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-const Navbar = ({handleNavbarToggle}) => {
+const Navbar = ({ handleNavbarToggle }) => {
 
   const title = "AIPrompt";
+  const routeIcon = "/prompt";
   const user = JSON.parse(sessionStorage.getItem("user"));
 
 
@@ -35,7 +36,7 @@ const Navbar = ({handleNavbarToggle}) => {
                 ></path>
               </svg>
             </button>
-            <Link to={"/"} className="flex ml-2 md:mr-24">
+            <Link to={routeIcon} className="flex ml-2 md:mr-24">
               <img
                 src="https://flowbite.com/docs/images/logo.svg"
                 className="h-8 mr-3"
@@ -54,7 +55,7 @@ const Navbar = ({handleNavbarToggle}) => {
               <img
                 className="w-8 h-8 rounded-full"
                 src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                alt="user photo"
+                alt="user profile"
               />
             </div>
           </div>
