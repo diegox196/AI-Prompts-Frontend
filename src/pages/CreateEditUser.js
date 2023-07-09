@@ -8,6 +8,7 @@ const User = ({ action, userId }) => {
   let initData = {
     "email": "",
     "username": "",
+    "password": "",
     "first_name": "",
     "last_name": "",
     "active": false,

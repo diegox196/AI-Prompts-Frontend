@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 const UserForm = ({ type, userData }) => {
 
   const [formData, setFormData] = useState(userData);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     setFormData(userData);
@@ -10,6 +11,7 @@ const UserForm = ({ type, userData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value
@@ -18,11 +20,20 @@ const UserForm = ({ type, userData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate empty fields
+    const isEmptyField = Object.values(formData).some((value) => value === "");
+
+    if (formData.password === confirmPassword) {
+      console.log(formData.password + " && " + confirmPassword + " iguales");
+    }
+
     // Aquí puedes realizar la lógica para guardar los cambios del formulario
     console.log(formData);
   };
 
   const isViewMode = type === 'View';
+  const isCreateMode = type === 'Add new';
 
   return (
     <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
@@ -64,6 +75,40 @@ const UserForm = ({ type, userData }) => {
                 disabled={isViewMode}
               />
             </div>
+
+            {isCreateMode &&
+              <>
+                <div>
+                  <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Password"
+                    required=""
+                    value={formData.password}
+                    onChange={handleChange}
+                    disabled={isViewMode}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="re-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
+                  <input
+                    type="password"
+                    name="re-password"
+                    id="re-password"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Confirm password"
+                    required=""
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    disabled={isViewMode}
+                  />
+                </div>
+              </>
+            }
 
             <div>
               <label htmlFor="firstname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
@@ -124,7 +169,7 @@ const UserForm = ({ type, userData }) => {
             </div>
           </div>
 
-          {isViewMode ??
+          {!isViewMode &&
             <button
               type="submit"
               className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
