@@ -8,7 +8,6 @@ const Navbar = ({ handleNavbarToggle }) => {
   const routeIcon = "/prompt";
   const user = JSON.parse(sessionStorage.getItem("user"));
 
-
   return (
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -54,7 +53,7 @@ const Navbar = ({ handleNavbarToggle }) => {
               </div>
               <img
                 className="w-8 h-8 rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
                 alt="user profile"
               />
             </div>

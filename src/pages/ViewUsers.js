@@ -2,18 +2,30 @@ import React, { useState } from 'react';
 import TableHeaderInfo from '../components/TableHeaderInfo';
 import UserTable from '../components/UserTable';
 import CreateReadEditUser from './CreateReadEditUser';
+import axios from 'axios';
+import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 
 const ViewUsers = () => {
   const [isAllUser, setIsAllUser] = useState(true);
   const [userId, setUserId] = useState("");
+  const [isShowModal, setIsShowModal] = useState(false);
+
   let [typeAction, setTypeAction] = useState("Add new");
 
   const goAllUsers = (go) => {
     setIsAllUser(go);
   }
 
-  const deleteUser = (id) => {
-    console.log(id);
+  const deleteUser = async (id) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_URI}/api/user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /**
@@ -26,20 +38,34 @@ const ViewUsers = () => {
     setUserId(id);
     setTypeAction(type);
     if (type === 'Delete') {
-      deleteUser(id);
+      setIsShowModal(true);
     } else {
       setIsAllUser(false);
     }
   };
 
+  // -- Action Confirm Modal
+  const handleClose = () => {
+    setIsShowModal(false);
+  };
+
+  const handleConfirm = () => {
+    deleteUser(userId);
+    setIsShowModal(false);
+  };
+  // -- End Action Confirm Modal
+
   return (
     <>
-      {isAllUser ?
-        <>
-          <TableHeaderInfo type={"user"} goAllUsers={goAllUsers} />
-          <UserTable handleClick={handleClick} />
-        </>
-        : <CreateReadEditUser action={typeAction} userId={userId} goAllUsers={goAllUsers} />
+      {
+        isShowModal
+          ? <DeleteConfirmationModal handleClose={handleClose} handleConfirm={handleConfirm} />
+          : isAllUser ?
+            <>
+              <TableHeaderInfo type={"user"} goAllUsers={goAllUsers} />
+              <UserTable handleClick={handleClick} />
+            </>
+            : <CreateReadEditUser action={typeAction} userId={userId} goAllUsers={goAllUsers} />
       }
     </>
   );

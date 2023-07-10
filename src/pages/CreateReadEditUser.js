@@ -8,7 +8,7 @@ import axios from 'axios';
    * @param {string} type View - Edit - Add new
    * @param {string} id e35e12e5awd5awd
    */
-const CreateReadEditUser = ({ action, userId, goAllUsers}) => {
+const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
 
   let initData = {
     "email": "",
@@ -37,10 +37,13 @@ const CreateReadEditUser = ({ action, userId, goAllUsers}) => {
     getUserData();
   }, [userId]);
 
-  const updateNewUser = (newData) => {
-    let userJSON = {};
-    console.log('create');
-    return userJSON;
+  const updateNewUser = async (newData) => {
+    try {
+      const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/user/${newData._id}`, newData);
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
   };
 
   const createNewUser = async (newData) => {

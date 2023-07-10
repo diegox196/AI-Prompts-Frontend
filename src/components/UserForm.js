@@ -27,6 +27,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     // Validate empty fields
     const isEmptyField = Object.values(formData).some((value) => value === "");
     if (isEmptyField) {
@@ -34,10 +35,12 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
       return;
     }
 
-    // Validate passwords
-    if (formData.password !== confirmPassword) {
-      setErrorMessage("Passwords do not match");
-      return;
+    if (isCreateMode) {
+      // Validate passwords
+      if (formData.password !== confirmPassword) {
+        setErrorMessage("Passwords do not match");
+        return;
+      }
     }
 
     const isSaved = await handleSave(formData);
@@ -165,6 +168,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={formData.role}
                 onChange={handleChange}
+                name="role"
                 disabled={isViewMode}
               >
                 <option value="user">User</option>
@@ -178,6 +182,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
                 id="state"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={formData.active}
+                name="active"
                 onChange={handleChange}
                 disabled={isViewMode}
               >
