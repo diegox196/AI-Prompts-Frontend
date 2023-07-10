@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function PromptTable() {
+function PromptTable({ handleClick }) {
   const [promptData, setPromptData] = useState([]);
 
   useEffect(() => {
-    fetchData();
+    getPromptsByUserID();
   }, []);
 
-  const fetchData = async () => {
+  const user = JSON.parse(sessionStorage.getItem("user"));
+
+  const getPromptsByUserID = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompt`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompt/user/${user.user_id}`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
@@ -19,22 +21,6 @@ function PromptTable() {
     } catch (error) {
       console.error('Error fetching prompt data:', error);
     }
-  };
-
-  /*const handleNewPrompt = () => {
-    console.log(`New Prompt`);
-  };*/
-
-  const handleView = (promptId) => {
-    console.log(`View prompt with ID: ${promptId}`);
-  };
-
-  const handleEdit = (promptId) => {
-    console.log(`Edit prompt with ID: ${promptId}`);
-  };
-
-  const handleDelete = (promptId) => {
-    console.log(`Delete prompt with ID: ${promptId}`);
   };
 
   return (
@@ -65,13 +51,13 @@ function PromptTable() {
                   </span>
                 </td>
                 <td className="py-2 px-4 text-center">
-                  <button className="text-blue-500 mr-2" onClick={() => handleView(prompt._id)}>
+                  <button className="text-blue-500 mr-2" onClick={() => handleClick("View", prompt._id)}>
                     View
                   </button>
-                  <button className="text-blue-500 mr-2" onClick={() => handleEdit(prompt._id)}>
+                  <button className="text-blue-500 mr-2" onClick={() => handleClick("Edit", prompt._id)}>
                     Edit
                   </button>
-                  <button className="text-blue-500" onClick={() => handleDelete(prompt._id)}>
+                  <button className="text-blue-500" onClick={() => handleClick("Delete", prompt._id)}>
                     Delete
                   </button>
                 </td>

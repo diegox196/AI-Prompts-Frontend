@@ -26,7 +26,11 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
     const getUserData = async () => {
       if (userId) {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/user/${userId}`);
+          const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/user/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+            }
+          });
           setUserData(response.data);
         } catch (error) {
           console.error('Error al obtener los datos del usuario:', error);
@@ -39,7 +43,11 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
 
   const updateNewUser = async (newData) => {
     try {
-      const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/user/${newData._id}`, newData);
+      const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/user/${newData._id}`, newData, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
       return response.data;
     } catch (error) {
       return error.response.data;

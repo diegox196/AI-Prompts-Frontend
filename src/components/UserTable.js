@@ -5,12 +5,16 @@ function UserTable({ handleClick }) {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
-    fetchData();
+    getUsersData();
   }, []);
 
-  const fetchData = async () => {
+  const getUsersData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/user`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/user`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
       setUserData(response.data);
     } catch (error) {
       console.error('Error fetching user data:', error);

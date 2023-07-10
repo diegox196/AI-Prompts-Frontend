@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import TableHeaderInfo from '../components/TableHeaderInfo';
 import UserTable from '../components/UserTable';
 import CreateReadEditUser from './CreateReadEditUser';
-import axios from 'axios';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 
 const ViewUsers = () => {
@@ -62,7 +63,7 @@ const ViewUsers = () => {
           ? <DeleteConfirmationModal handleClose={handleClose} handleConfirm={handleConfirm} />
           : isAllUser ?
             <>
-              <TableHeaderInfo type={"user"} goAllUsers={goAllUsers} />
+              <TableHeaderInfo type={"user"} goAllData={goAllUsers} />
               <UserTable handleClick={handleClick} />
             </>
             : <CreateReadEditUser action={typeAction} userId={userId} goAllUsers={goAllUsers} />
