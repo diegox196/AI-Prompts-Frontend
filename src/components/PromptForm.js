@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Alert from './Alert';
+import Chip from './Chip';
 
 const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
 
@@ -41,6 +42,11 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
   const viewAllPrompt = () => {
     goAllPrompts(true);
   }
+
+  const handleDeleteChip = (item) => {
+    console.log("eliminar " + item)
+  }
+
   return (
     <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
 
@@ -129,6 +135,12 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
               </select>
             </div>
 
+          </div>
+
+          <div className="flex flex-wrap pb-4">
+            <Chip text={"Primary"} handleDeleteChip={handleDeleteChip} />
+            <Chip text={"Secondary"} handleDeleteChip={handleDeleteChip} />
+            <Chip text={"Other"} handleDeleteChip={handleDeleteChip} />
           </div>
 
           <div className="flex space-x-4">

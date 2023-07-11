@@ -8,8 +8,8 @@ const EmptyState = ({ item }) => {
           <circle cx="12" cy="12" r="10"></circle>
           <path d="M12 8v4M12 16h.01"></path>
         </svg>
-        <h3 className="mt-2 text-lg font-medium text-gray-900">No {item} to display</h3>
-        <p className="mt-1 text-sm text-gray-500">No {item} were found. Please add some {item}.</p>
+        <h3 className="mt-2 text-lg font-medium text-gray-900 dark:text-white">No {item} to display</h3>
+        <p className="mt-1 text-sm font-medium text-gray-500">No {item} were found. Please add some {item}.</p>
       </div>
     </section>
   );
