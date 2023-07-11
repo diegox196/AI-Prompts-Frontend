@@ -10,7 +10,7 @@ import PlayPrompt from '../components/PlayPrompt';
    */
 const ViewPrompt = ({ promptId, goAllPrompts }) => {
 
-  const [promptData, setPromptData] = useState({});
+  const [promptData, setPromptData] = useState(null);
 
   useEffect(() => {
     const getPromptData = async () => {
@@ -32,9 +32,7 @@ const ViewPrompt = ({ promptId, goAllPrompts }) => {
   }, [promptId]);
 
   return (
-    <>
-      <PlayPrompt promptData={promptData} goAllPrompts={goAllPrompts} />
-    </>
+    promptData && <PlayPrompt promptData={promptData} goAllPrompts={goAllPrompts} />
   );
 };
 

@@ -75,9 +75,7 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
   };
 
   return (
-    <>
-      <UserForm type={action} userData={userData} handleSave={handleSave} goAllUsers={goAllUsers} />
-    </>
+    userData && <UserForm type={action} userData={userData} handleSave={handleSave} goAllUsers={goAllUsers} />
   );
 };
 

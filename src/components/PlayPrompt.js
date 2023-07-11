@@ -7,22 +7,11 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 const PlayPrompt = ({ promptData, goAllPrompts }) => {
+
   const [formData, setFormData] = useState(promptData);
+  
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setFormData(promptData);
-  }, [promptData]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
 
   const jsonResponse = {
     "object": "edit",
@@ -87,7 +76,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
         </div>
 
         <h2 className="flex items-center text-1xl font-bold dark:text-white mb-4">Type
-          <small className="bg-blue-100 text-blue-800 mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-2">
+          <small className="uppercase bg-blue-100 text-blue-800 mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-2">
             {promptData.type}
           </small>
         </h2>

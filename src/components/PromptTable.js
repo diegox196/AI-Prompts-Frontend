@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function PromptTable({ handleClick }) {
-  const [promptData, setPromptData] = useState([]);
+
+  const [promptData, setPromptData] = useState(null);
 
   const user = JSON.parse(sessionStorage.getItem("user"));
 
@@ -24,6 +25,7 @@ function PromptTable({ handleClick }) {
   }, []);
 
   return (
+    promptData &&
     <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
       <div className="overflow-x-auto shadow-md rounded-lg">
         <table className="w-full bg-white dark:bg-gray-800 dark:text-white">

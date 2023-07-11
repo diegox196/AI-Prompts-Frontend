@@ -10,7 +10,7 @@ import PromptForm from '../components/PromptForm';
    * @param {Function} goAllPrompts function to go to the main prompts
    */
 const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
-  
+
   const userId = JSON.parse(sessionStorage.getItem("user")).user_id
 
   const initData = {
@@ -82,9 +82,7 @@ const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
     }
   };
   return (
-    <>
-      <PromptForm type={action} promptData={promptData} handleSave={handleSave} goAllPrompts={goAllPrompts} />
-    </>
+    promptData && <PromptForm type={action} promptData={promptData} handleSave={handleSave} goAllPrompts={goAllPrompts} />
   );
 };
 

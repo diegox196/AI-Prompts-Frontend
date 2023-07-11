@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function UserTable({ handleClick }) {
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     getUsersData();
@@ -22,6 +22,7 @@ function UserTable({ handleClick }) {
   };
 
   return (
+    userData &&
     <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
       <div className="overflow-x-auto shadow-md rounded-lg">
         <table className="w-full bg-white dark:bg-gray-800 dark:text-white">
