@@ -9,7 +9,7 @@ import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 const PlayPrompt = ({ promptData, goAllPrompts }) => {
 
   const [formData, setFormData] = useState(promptData);
-  
+
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,7 +61,16 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
   }
 
   const verifyJSON = () => {
-    return JSON.stringify(formData.response, null, 2)
+    try {
+      // Convert to JSON object
+      const jsonObject = JSON.parse(formData.response);
+      // Convert back to JSON string with formatted indentation
+      const formattedJsonString = JSON.stringify(jsonObject, null, 2);
+      return formattedJsonString;
+    } catch (err) {
+      return formData.response;
+    }
+
   }
 
   return (
@@ -93,7 +102,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
 
         <form onSubmit={handleSubmit}>
           <div className="flex space-x-4 pb-6">
-            <LoadingButton isLoading={isLoading} btnText={"Run"} typeIcon={"Run"}/>
+            <LoadingButton isLoading={isLoading} btnText={"Run"} typeIcon={"Run"} />
           </div>
 
           {errorMessage !== '' && <Alert type={"Danger"} message={errorMessage} />}
