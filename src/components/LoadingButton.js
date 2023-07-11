@@ -1,10 +1,23 @@
 import React from 'react';
 
-const LoadingButton = ({ isLoading, btnText }) => {
+const LoadingButton = ({ isLoading, btnText, typeIcon, fullWidth }) => {
+
+  let icon;
+
+  switch (typeIcon) {
+    case 'Run':
+      icon = <svg className="w-3.5 h-3.5 mr-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+        viewBox="0 0 10 16"><path d="M3.414 1A2 2 0 0 0 0 2.414v11.172A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1Z" />
+      </svg>;
+      break;
+    default:
+      icon = <></>
+  }
+
   return (
     <button
       type="submit"
-      className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      className={`${fullWidth ? 'flex w-full justify-center text-center' : '' } text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
     >
 
       {isLoading
@@ -15,9 +28,8 @@ const LoadingButton = ({ isLoading, btnText }) => {
           </svg>
           Loading...
         </>
-        : <><svg className="w-3.5 h-3.5 mr-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-          viewBox="0 0 10 16"><path d="M3.414 1A2 2 0 0 0 0 2.414v11.172A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1Z" />
-        </svg>
+        : <>
+          {icon}
           {btnText}
         </>
       }

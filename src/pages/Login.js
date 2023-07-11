@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Alert from '../components/Alert';
+import LoadingButton from '../components/LoadingButton';
 
 const Login = ({ handleLogin }) => {
 
@@ -10,9 +11,8 @@ const Login = ({ handleLogin }) => {
     password: ''
   });
 
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-
-  const { email, password } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,12 +21,14 @@ const Login = ({ handleLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/session`, formData);
       handleLogin(response.data.tokenSession);
       sessionStorage.setItem("user", JSON.stringify(response.data.user));
     } catch (error) {
       setError(true);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -46,7 +48,7 @@ const Login = ({ handleLogin }) => {
         {error && (
           <Alert type={"Danger"} message={"Incorrect username or password."} />
         )}
-        <form className="space-y-6" method="POST">
+        <form className="space-y-6" method="POST" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
               Email address
@@ -57,7 +59,7 @@ const Login = ({ handleLogin }) => {
                 name="email"
                 type="email"
                 autoComplete="email"
-                value={email}
+                value={formData.email}
                 onChange={handleChange}
                 required
                 className="block w-full rounded-md border-0 px-2 py-1.5 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
@@ -76,7 +78,7 @@ const Login = ({ handleLogin }) => {
                 id="password"
                 name="password"
                 type="password"
-                value={password}
+                value={formData.password}
                 onChange={handleChange}
                 required
                 className="block w-full rounded-md border-0 px-2 py-1.5 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
@@ -85,13 +87,7 @@ const Login = ({ handleLogin }) => {
           </div>
 
           <div>
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="flex w-full justify-center text-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              Sign in
-            </button>
+            <LoadingButton isLoading={isLoading} btnText={"Sign in"} fullWidth={true} />
           </div>
         </form>
 

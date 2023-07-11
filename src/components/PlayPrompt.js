@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Alert from './Alert';
 import LoadingButton from './LoadingButton';
 import axios from 'axios';
@@ -93,7 +93,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
 
         <form onSubmit={handleSubmit}>
           <div className="flex space-x-4 pb-6">
-            <LoadingButton isLoading={isLoading} btnText={"Run"} />
+            <LoadingButton isLoading={isLoading} btnText={"Run"} typeIcon={"Run"}/>
           </div>
 
           {errorMessage !== '' && <Alert type={"Danger"} message={errorMessage} />}
