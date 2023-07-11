@@ -6,9 +6,6 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
   const [formData, setFormData] = useState(promptData);
   const [errorMessage, setErrorMessage] = useState("");
 
-  //Control which components to show
-  const isViewMode = type === 'View';
-
   useEffect(() => {
     setFormData(promptData);
   }, [promptData]);
@@ -67,8 +64,7 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                 placeholder="Name"
                 required=""
                 value={formData.name}
-                onChange={handleChange}
-                disabled={isViewMode} />
+                onChange={handleChange} />
             </div>
 
             <div>
@@ -87,23 +83,21 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
 
             <div className="sm:col-span-2">
               <label htmlFor="input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Input</label>
-              <textarea id="input" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              <textarea id="input" rows="4" className="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="The input text to use as a starting point for the edit"
                 name="input"
                 value={formData.input}
-                onChange={handleChange}
-                disabled={isViewMode}>
+                onChange={handleChange}>
               </textarea>
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="instruction" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Instruction</label>
+              <label htmlFor="instruction" className="resize-none block mb-2 text-sm font-medium text-gray-900 dark:text-white">Instruction</label>
               <textarea id="instruction" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="The instruction that tells the model how to edit the prompt"
                 name="instruction"
                 value={formData.instruction}
-                onChange={handleChange}
-                disabled={isViewMode}>
+                onChange={handleChange}>
               </textarea>
             </div>
 
@@ -119,8 +113,7 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                 step={0.1}
                 required=""
                 value={formData.temperature}
-                onChange={handleChange}
-                disabled={isViewMode} />
+                onChange={handleChange} />
             </div>
 
             <div>
@@ -130,7 +123,6 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                 name="model"
                 value={formData.model}
                 onChange={handleChange}
-                disabled={isViewMode}
               >
                 <option value="text-davinci-edit-001">text-davinci-edit-001</option>
                 <option value="code-davinci-edit-001">code-davinci-edit-001</option>
@@ -140,14 +132,12 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
           </div>
 
           <div className="flex space-x-4">
-            {!isViewMode &&
-              <button
-                type="submit"
-                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Save
-              </button>
-            }
+            <button
+              type="submit"
+              className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Save
+            </button>
             <button
               type="button"
               onClick={viewAllPrompt}

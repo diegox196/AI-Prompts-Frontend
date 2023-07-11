@@ -4,24 +4,24 @@ import axios from 'axios';
 function PromptTable({ handleClick }) {
   const [promptData, setPromptData] = useState([]);
 
-  useEffect(() => {
-    getPromptsByUserID();
-  }, []);
-
   const user = JSON.parse(sessionStorage.getItem("user"));
 
-  const getPromptsByUserID = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompt/user/${user.user_id}`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
-        }
-      });
-      setPromptData(response.data);
-    } catch (error) {
-      console.error('Error fetching prompt data:', error);
-    }
-  };
+  useEffect(() => {
+    const getPromptsByUserID = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompt/user/${user.user_id}`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+          }
+        });
+        setPromptData(response.data);
+      } catch (error) {
+        console.error('Error fetching prompt data:', error);
+      }
+    };
+
+    getPromptsByUserID();
+  }, []);
 
   return (
     <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">

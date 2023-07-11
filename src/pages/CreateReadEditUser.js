@@ -5,8 +5,9 @@ import axios from 'axios';
 /**
    * Controls the actions of view, create and edit
    * 
-   * @param {string} type View - Edit - Add new
-   * @param {string} id e35e12e5awd5awd
+   * @param {String} action View - Edit - Add new
+   * @param {String} promptId e35e12e5awd5awd
+   * @param {Function} goAllPrompts function to go to the main users
    */
 const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
 
@@ -24,7 +25,7 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
 
   useEffect(() => {
     const getUserData = async () => {
-      if (userId) {
+      if (action === "Edit") {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/user/${userId}`, {
             headers: {
@@ -35,6 +36,8 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
         } catch (error) {
           console.error('Error al obtener los datos del usuario:', error);
         }
+      } else {
+        setUserData(initData);
       }
     };
 

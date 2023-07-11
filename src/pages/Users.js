@@ -1,25 +1,25 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import TableHeaderInfo from '../components/TableHeaderInfo';
-import PromptTable from '../components/PromptTable';
-import CreateReadEditPrompt from './CreateReadEditPrompt';
+import UserTable from '../components/UserTable';
+import CreateReadEditUser from './CreateReadEditUser';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 
-const ViewPrompts = () => {
-  const [isAllPrompt, setIsAllPrompt] = useState(true);
-  const [promptId, setPromptId] = useState("");
+const Users = () => {
+  const [isAllUser, setIsAllUser] = useState(true);
+  const [userId, setUserId] = useState("");
   const [isShowModal, setIsShowModal] = useState(false);
 
   let [typeAction, setTypeAction] = useState("Add new");
 
-  const goAllPrompts = (go) => {
-    setIsAllPrompt(go);
+  const goAllUsers = (go) => {
+    setIsAllUser(go);
   }
 
-  const deletePrompt = async (id) => {
+  const deleteUser = async (id) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URI}/api/prompt/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URI}/api/user/${id}`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
@@ -30,18 +30,18 @@ const ViewPrompts = () => {
   }
 
   /**
-   * Controls the actions of the table's view, edit and delete buttons and the prompt id
+   * Controls the actions of the table's view, edit and delete buttons and the user id
    * 
    * @param {string} type View - Edit - Delete
    * @param {string} id e35e12e5awd5awd
    */
   const handleClick = (type, id) => {
-    setPromptId(id);
+    setUserId(id);
     setTypeAction(type);
     if (type === 'Delete') {
       setIsShowModal(true);
     } else {
-      setIsAllPrompt(false);
+      setIsAllUser(false);
     }
   };
 
@@ -51,7 +51,7 @@ const ViewPrompts = () => {
   };
 
   const handleConfirm = () => {
-    deletePrompt(promptId);
+    deleteUser(userId);
     setIsShowModal(false);
   };
   // -- End Action Confirm Modal
@@ -61,15 +61,15 @@ const ViewPrompts = () => {
       {
         isShowModal
           ? <DeleteConfirmationModal handleClose={handleClose} handleConfirm={handleConfirm} />
-          : isAllPrompt ?
+          : isAllUser ?
             <>
-              <TableHeaderInfo type={"prompt"} goAllData={goAllPrompts} />
-              <PromptTable handleClick={handleClick} />
+              <TableHeaderInfo type={"user"} setTypeAction={setTypeAction} goAllData={goAllUsers} />
+              <UserTable handleClick={handleClick} />
             </>
-            : <CreateReadEditPrompt action={typeAction} promptId={promptId} goAllPrompts={goAllPrompts} />
+            : <CreateReadEditUser action={typeAction} userId={userId} goAllUsers={goAllUsers} />
       }
     </>
   );
 };
 
-export default ViewPrompts;
+export default Users;

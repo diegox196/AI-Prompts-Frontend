@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
-import ViewUsers from './ViewUsers';
-import ViewPrompts from './ViewPrompts';
+import Users from './Users';
+import Prompts from './Prompts';
 
 //<Prompt action={"Add"}/>
 
@@ -21,7 +21,7 @@ const Dashboard = ({ handleLogout, typeView }) => {
       <Navbar handleNavbarToggle={handleNavbarToggle} />
       <div className="sm:ml-64 mt-14 pt-4">
         {
-          typeView === "user" ? <ViewUsers /> : <ViewPrompts />
+          typeView === "user" ? <Users /> : <Prompts />
         }
       </div>
     </>

@@ -5,14 +5,15 @@ import PromptForm from '../components/PromptForm';
 /**
    * Controls the actions of view, create and edit
    * 
-   * @param {string} type View - Edit - Add new
-   * @param {string} id e35e12e5awd5awd
+   * @param {String} action View - Edit - Add new
+   * @param {String} promptId e35e12e5awd5awd
+   * @param {Function} goAllPrompts function to go to the main prompts
    */
-const CreateReadEditPrompt = ({ action, promptId, goAllPrompts }) => {
-
+const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
+  
   const userId = JSON.parse(sessionStorage.getItem("user")).user_id
 
-  let initData = {
+  const initData = {
     "name": "",
     "type": "edit",
     "user_id": userId,
@@ -28,7 +29,7 @@ const CreateReadEditPrompt = ({ action, promptId, goAllPrompts }) => {
 
   useEffect(() => {
     const getPromptData = async () => {
-      if (promptId) {
+      if (action === "Edit") {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompt/${promptId}`, {
             headers: {
@@ -39,11 +40,13 @@ const CreateReadEditPrompt = ({ action, promptId, goAllPrompts }) => {
         } catch (error) {
           console.error('Error al obtener los datos del usuario:', error);
         }
+      } else {
+        setPromptData(initData);
       }
     };
 
     getPromptData();
-  }, [promptId]);
+  }, []);
 
   const updateNewPrompt = async (newData) => {
     try {
@@ -60,7 +63,6 @@ const CreateReadEditPrompt = ({ action, promptId, goAllPrompts }) => {
 
   const createNewPrompt = async (newData) => {
     try {
-      const user = JSON.parse(sessionStorage.getItem("user"));
       const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/prompt`, newData, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
@@ -86,4 +88,4 @@ const CreateReadEditPrompt = ({ action, promptId, goAllPrompts }) => {
   );
 };
 
-export default CreateReadEditPrompt;
+export default CreateEditPrompt;
