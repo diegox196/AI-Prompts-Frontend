@@ -1,68 +1,121 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import Alert from '../components/Alert';
 
 const Signup = () => {
+
+  const [formData, setFormData] = useState({
+    email: '',
+    username: '',
+    first_name: '',
+    last_name: '',
+    password: '',
+    active: false,
+    role: "user"
+  });
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSavedUser, setIsSavedUser] = useState(false);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const createNewUser = async (newData) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/user`, newData);
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Validate empty fields
+    const isEmptyField = Object.values(formData).some((value) => value === "");
+    if (isEmptyField) {
+      setErrorMessage("Please fill in all fields");
+      return;
+    }
+
+    // Validate passwords
+    if (formData.password !== confirmPassword) {
+      setErrorMessage("Passwords do not match");
+      return;
+    }
+
+    const isSaved = await createNewUser(formData);
+    if (isSaved.error) {
+      setErrorMessage(isSaved.error);
+    } else {
+      setIsSavedUser(true);
+    }
+  };
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <form className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <form onSubmit={handleSubmit} className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="space-y-12">
-          <div className="border-b border-gray-900/10 dark:border-white pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900 dark:text-white">Profile</h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
-              This information will be displayed publicly so be careful what you share.
-            </p>
 
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className="pb-8 dark:border-white">
+            <h2 className=" text-lg font-semibold leading-7 text-gray-900 dark:text-white">Sign Up</h2>
+
+            <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-6">
-                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                  Username
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="username"
-                      id="username"
-                      autoComplete="username"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
+                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Username"
+                  required=""
+                  value={formData.username}
+                  onChange={handleChange}
+                />
               </div>
-            </div>
-          </div>
 
-          <div className="border-b border-gray-900/10 pb-12 dark:border-white">
-            <h2 className="text-base font-semibold leading-7 text-gray-900 dark:text-white">Personal Information</h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">Use a permanent address where you can receive mail.</p>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-3">
-                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
+                <label htmlFor="first_name" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
                   First name
                 </label>
                 <div className="mt-2">
                   <input
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     type="text"
-                    name="first-name"
-                    id="first-name"
-                    autoComplete="given-name"
-                    className="block w-full rounded-md border-0 py-1.5 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    name="first_name"
+                    id="first_name"
+                    autoComplete="first_name"
+                    placeholder="First Name"
+                    required=""
+                    value={formData.first_name}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
+                <label htmlFor="last_name" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
                   Last name
                 </label>
                 <div className="mt-2">
                   <input
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     type="text"
-                    name="last-name"
-                    id="last-name"
-                    autoComplete="family-name"
-                    className="block w-full rounded-md border-0 py-1.5 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    name="last_name"
+                    id="last_name"
+                    placeholder="Last Name"
+                    required=""
+                    autoComplete="last_name"
+                    value={formData.last_name}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -73,11 +126,15 @@ const Signup = () => {
                 </label>
                 <div className="mt-2">
                   <input
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     id="email"
                     name="email"
+                    placeholder="Email"
+                    required=""
                     type="email"
                     autoComplete="email"
-                    className="block w-full rounded-md border-0 py-1.5 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    value={formData.email}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -88,24 +145,32 @@ const Signup = () => {
                 </label>
                 <div className="mt-2">
                   <input
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     id="password"
                     name="password"
                     type="password"
-                    className="block w-full rounded-md border-0 py-1.5 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    placeholder="Password"
+                    required=""
+                    value={formData.password}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-6">
                 <label htmlFor="repeat_password" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                  Repeat Password
+                  Confirm Password
                 </label>
                 <div className="mt-2">
                   <input
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     id="repeat_password"
                     name="repeat_password"
                     type="password"
-                    className="block w-full rounded-md border-0 py-1.5 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    placeholder="Confirm password"
+                    required=""
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </div>
               </div>
@@ -113,6 +178,8 @@ const Signup = () => {
             </div>
           </div>
         </div>
+
+        {errorMessage !== '' && <Alert type={"Danger"} message={errorMessage} />}
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <Link to={"/"} type="button" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
@@ -124,6 +191,7 @@ const Signup = () => {
           >
             Save
           </button>
+          {isSavedUser && <Navigate to={"/"} replace={true} />}
         </div>
       </form>
     </div>
