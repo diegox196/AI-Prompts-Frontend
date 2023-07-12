@@ -6,8 +6,7 @@ import UserTable from '../components/UserTable';
 import CreateReadEditUser from './CreateReadEditUser';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 
-const Users = () => {
-  const [isAllUser, setIsAllUser] = useState(true);
+const Users = ({ isAllUser, setIsAllUser }) => {
   const [userId, setUserId] = useState("");
   const [isShowModal, setIsShowModal] = useState(false);
 

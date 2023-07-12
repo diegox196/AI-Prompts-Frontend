@@ -3,6 +3,8 @@ import Alert from './Alert';
 import LoadingButton from './LoadingButton';
 import axios from 'axios';
 
+import Carousel from './Carousel';
+
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
@@ -27,6 +29,26 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
       "completion_tokens": 32,
       "total_tokens": 57
     }
+  }
+
+  const data = {
+    data: [
+      {
+        url: "https://flowbite.com/docs/images/carousel/carousel-1.svg"
+      },
+      {
+        url: "https://flowbite.com/docs/images/carousel/carousel-2.svg"
+      },
+      {
+        url: "https://flowbite.com/docs/images/carousel/carousel-3.svg"
+      },
+      {
+        url: "https://flowbite.com/docs/images/carousel/carousel-4.svg"
+      },
+      {
+        url: "https://flowbite.com/docs/images/carousel/carousel-5.svg"
+      }
+    ]
   }
 
   const updateResponsePrompt = async () => {
@@ -107,7 +129,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
 
           {errorMessage !== '' && <Alert type={"Danger"} message={errorMessage} />}
 
-          <div className="mb-3 dark:bg-gray-700 rounded-xl">
+          <div className="mb-3 bg-gray-300 dark:bg-gray-700 rounded-xl">
             <p className="block p-2 ml-2 text-1xl font-bold text-gray-900 dark:text-white">Response</p>
             <div className="p-3 rounded-b-xl bg-[#001727]">
               <SyntaxHighlighter language="json" style={nightOwl}>
@@ -115,6 +137,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
               </SyntaxHighlighter>
             </div>
           </div>
+          <Carousel items={data}/>
 
         </form>
 

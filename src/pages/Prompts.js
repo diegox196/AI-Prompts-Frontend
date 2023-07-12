@@ -7,8 +7,7 @@ import CreateEditPrompt from './CreateEditPrompt';
 import ViewPrompt from './ViewPrompt';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 
-const Prompts = () => {
-  const [isAllPrompt, setIsAllPrompt] = useState(true);
+const Prompts = ({ isAllPrompt, setIsAllPrompt }) => {
   const [promptId, setPromptId] = useState("");
   const [isShowModal, setIsShowModal] = useState(false);
 

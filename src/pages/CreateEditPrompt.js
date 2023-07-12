@@ -22,6 +22,8 @@ const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
     "input": "",
     "instruction": "",
     "temperature": 0,
+    "prompt": "",
+    "n_image": 1,
     "response": "none",
   };
 
