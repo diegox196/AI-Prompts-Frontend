@@ -8,6 +8,21 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [typeSelected, setTypeSelected] = useState("edit");
 
+  const modelEdit = [
+    "text-davinci-edit-001", "code-davinci-edit-001"
+  ];
+
+  const modelCompletion = [
+    "text-davinci-edit-001",
+    "code-davinci-edit-001",
+    "gpt-3.5-turbo-16k-0613",
+    "gpt-3.5-turbo-16k",
+    "gpt-3.5-turbo-0301",
+    "gpt-3.5-turbo",
+    "gpt-3.5-turbo-0613"
+  ]
+
+
   useEffect(() => {
     setFormData(promptData);
   }, [promptData]);
@@ -56,10 +71,12 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
 
       <div className="p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
 
-        <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+        <div className="pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             {`${type} prompt`}
           </h3>
+          {type === 'Edit' &&
+            <p className='text-black dark:text-gray-300'>You can only change the attributes of the edit prompt but not change the type of prompt.</p>}
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -84,6 +101,7 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                 name="type"
                 value={formData.type}
                 onChange={handleChange}
+                disabled={type === "Edit"}
               >
                 <option value="edit">Edit</option>
                 <option value="image">Image</option>
@@ -111,20 +129,40 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                   onChange={handleChange}>
                 </textarea>
               </div>
+            </>
+            }
+            {typeSelected === "completion" && <>
+              <div className="sm:col-span-2">
+                <label htmlFor="prompt"
+                  className="resize-none block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prompt</label>
+                <textarea id="prompt"
+                  rows="4"
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="The instruction that tells the model how to edit the prompt"
+                  name="prompt"
+                  value={formData.prompt}
+                  onChange={handleChange}>
+                </textarea>
+              </div>
+            </>}
 
+            {(typeSelected === "edit" || typeSelected === "completion") && <>
               <div>
-                <label htmlFor="temperature" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Temperature</label>
-                <input type="number"
+                <label htmlFor="temperature"
+                  className="flex flex-row items-center justify-between mb-4 text-sm font-medium text-gray-900 dark:text-white">Temperature
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">{formData.temperature}</p>
+                </label>
+
+                <input id="temperature"
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                  type="range"
                   name="temperature"
-                  id="temperature"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="0.5"
-                  min={0}
-                  max={1}
+                  min="0"
+                  max="2"
                   step={0.1}
-                  required=""
                   value={formData.temperature}
-                  onChange={handleChange} />
+                  onChange={handleChange}
+                  required="" />
               </div>
 
               <div>
@@ -135,8 +173,12 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                   value={formData.model}
                   onChange={handleChange}
                 >
-                  <option value="text-davinci-edit-001">text-davinci-edit-001</option>
-                  <option value="code-davinci-edit-001">code-davinci-edit-001</option>
+                  {typeSelected === "edit" ? modelEdit.map((model) => (
+                    <option key={model} value={model}>{model}</option>
+                  ))
+                    : modelCompletion.map((model) => (
+                      <option key={model} value={model}>{model}</option>
+                    ))}
                 </select>
               </div>
             </>
@@ -168,8 +210,6 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                 </div>
               </>
             }
-            {typeSelected === "completion" && <></>}
-
           </div>
 
           <div className="flex flex-wrap pb-4">
