@@ -24,7 +24,7 @@ const Users = ({ isAllUser, setIsAllUser }) => {
         }
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

@@ -25,7 +25,7 @@ const Prompts = ({ isAllPrompt, setIsAllPrompt }) => {
         }
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

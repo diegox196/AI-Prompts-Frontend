@@ -4,9 +4,9 @@ import Chip from './Chip';
 
 const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
 
-  const [formData, setFormData] = useState(promptData);
+  const [typeSelected, setTypeSelected] = useState("completion");
   const [errorMessage, setErrorMessage] = useState("");
-  const [typeSelected, setTypeSelected] = useState("edit");
+  const [formData, setFormData] = useState(promptData);
 
   const modelEdit = [
     "text-davinci-edit-001", "code-davinci-edit-001"
@@ -23,8 +23,11 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
   ]
 
   useEffect(() => {
-    setFormData(promptData);
-    setTypeSelected(promptData.type);
+    if (formType === "Edit") {
+      setFormData(promptData);
+      setTypeSelected(promptData.type);
+    }
+
     getBodyPrompt(promptData.type);
   }, [promptData]);
 
@@ -50,7 +53,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
         formData.body = {
           prompt: "",
           n: 1,
-          size: "1024x1024"
+          size: "256x256"
         };
         break;
     }
@@ -90,7 +93,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
         }));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -157,9 +160,9 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
                 onChange={handleChange}
                 disabled={formType === "Edit"}
               >
-                <option value="edit">Edit</option>
-                <option value="image">Image</option>
                 <option value="completion">Completion</option>
+                <option value="image">Image</option>
+                <option value="edit">Edit</option>
               </select>
             </div>
 

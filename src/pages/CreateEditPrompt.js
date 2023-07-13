@@ -15,7 +15,7 @@ const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
 
   const initData = {
     "name": "",
-    "type": "edit",
+    "type": "completion",
     "user_id": userId,
     "tags": [],
     "body": {},
