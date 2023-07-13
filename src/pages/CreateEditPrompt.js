@@ -18,13 +18,8 @@ const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
     "type": "edit",
     "user_id": userId,
     "tags": [],
-    "model": "text-davinci-edit-001",
-    "input": "",
-    "instruction": "",
-    "temperature": 0,
-    "prompt": "",
-    "n_image": 1,
-    "response": "none",
+    "body": {},
+    "response": ""
   };
 
   const [promptData, setPromptData] = useState(initData);
@@ -83,8 +78,9 @@ const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
       return await createNewPrompt(newData);
     }
   };
+
   return (
-    promptData && <PromptForm type={action} promptData={promptData} handleSave={handleSave} goAllPrompts={goAllPrompts} />
+    promptData && <PromptForm formType={action} promptData={promptData} handleSave={handleSave} goAllPrompts={goAllPrompts} />
   );
 };
 

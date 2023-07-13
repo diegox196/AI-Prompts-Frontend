@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Alert from './Alert';
 import Chip from './Chip';
 
-const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
+const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
 
   const [formData, setFormData] = useState(promptData);
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,33 +22,87 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
     "gpt-3.5-turbo-0613"
   ]
 
-
   useEffect(() => {
     setFormData(promptData);
+    setTypeSelected(promptData.type);
+    getBodyPrompt(promptData.type);
   }, [promptData]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === 'type') {
-      setTypeSelected(value);
+  const getBodyPrompt = (promptType) => {
+    switch (promptType) {
+      case "edit":
+        formData.body = {
+          model: "",
+          input: "",
+          instruction: "",
+          temperature: 1
+        };
+        break;
+      case "completion":
+        formData.body = {
+          model: "",
+          prompt: "",
+          max_tokens: 1,
+          temperature: 1
+        };
+        break;
+      case "image":
+        formData.body = {
+          prompt: "",
+          n: 1,
+          size: "1024x1024"
+        };
+        break;
     }
+  }
 
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
+  const handleChange = (e) => {
+    try {
+      const { name, value } = e.target;
+
+      if (name === 'type') {
+        setTypeSelected(value);
+        getBodyPrompt(value);
+      }
+
+      if (name === "tags") {
+        // For the tags field, create an array with the selected values
+        const selectedTags = Array.from(e.target.selectedOptions, (option) => option.value);
+        setFormData((prevData) => ({
+          ...prevData,
+          tags: selectedTags
+        }));
+      } else if (name.startsWith("body.")) {
+        // For the nested fields under 'body', update the state accordingly
+        const fieldName = name.split(".")[1];
+        setFormData((prevData) => ({
+          ...prevData,
+          body: {
+            ...prevData.body,
+            [fieldName]: value
+          }
+        }));
+      } else {
+        // For other fields, update the state directly
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validate empty fields
-    const isEmptyField = Object.values(formData).some((value) => value === "");
+    /*const isEmptyField = Object.values(formData).some((value) => value === "");
     if (isEmptyField) {
       setErrorMessage("Please fill in all fields");
       return;
-    }
+    }*/
 
     const isSaved = await handleSave(formData);
     if (isSaved.error) {
@@ -73,9 +127,9 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
 
         <div className="pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            {`${type} prompt`}
+            {`${formType} prompt`}
           </h3>
-          {type === 'Edit' &&
+          {formType === 'Edit' &&
             <p className='text-black dark:text-gray-300'>You can only change the attributes of the edit prompt but not change the type of prompt.</p>}
         </div>
 
@@ -101,7 +155,7 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                 name="type"
                 value={formData.type}
                 onChange={handleChange}
-                disabled={type === "Edit"}
+                disabled={formType === "Edit"}
               >
                 <option value="edit">Edit</option>
                 <option value="image">Image</option>
@@ -114,8 +168,8 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                 <label htmlFor="input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Input</label>
                 <textarea id="input" rows="4" className="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="The input text to use as a starting point for the edit"
-                  name="input"
-                  value={formData.input}
+                  name="body.input"
+                  value={formData.body.input}
                   onChange={handleChange}>
                 </textarea>
               </div>
@@ -124,8 +178,8 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                 <label htmlFor="instruction" className="resize-none block mb-2 text-sm font-medium text-gray-900 dark:text-white">Instruction</label>
                 <textarea id="instruction" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="The instruction that tells the model how to edit the prompt"
-                  name="instruction"
-                  value={formData.instruction}
+                  name="body.instruction"
+                  value={formData.body.instruction}
                   onChange={handleChange}>
                 </textarea>
               </div>
@@ -139,8 +193,8 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                   rows="4"
                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="The instruction that tells the model how to edit the prompt"
-                  name="prompt"
-                  value={formData.prompt}
+                  name="body.prompt"
+                  value={formData.body.prompt}
                   onChange={handleChange}>
                 </textarea>
               </div>
@@ -150,17 +204,17 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
               <div>
                 <label htmlFor="temperature"
                   className="flex flex-row items-center justify-between mb-4 text-sm font-medium text-gray-900 dark:text-white">Temperature
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">{formData.temperature}</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">{formData.body.temperature || 1}</p>
                 </label>
 
                 <input id="temperature"
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                   type="range"
-                  name="temperature"
+                  name="body.temperature"
                   min="0"
                   max="2"
                   step={0.1}
-                  value={formData.temperature}
+                  value={formData.body.temperature || 1}
                   onChange={handleChange}
                   required="" />
               </div>
@@ -169,8 +223,8 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                 <label htmlFor="model" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Model</label>
                 <select id="model"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  name="model"
-                  value={formData.model}
+                  name="body.model"
+                  value={formData.body.model}
                   onChange={handleChange}
                 >
                   {typeSelected === "edit" ? modelEdit.map((model) => (
@@ -189,23 +243,25 @@ const PromptForm = ({ type, promptData, handleSave, goAllPrompts }) => {
                   <label htmlFor="prompt" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prompt</label>
                   <textarea id="prompt" rows="4" className="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="The prompt text to use as a starting point for the edit"
-                    name="prompt"
-                    value={formData.prompt}
+                    name="body.prompt"
+                    value={formData.body.prompt}
                     onChange={handleChange}>
                   </textarea>
                 </div>
                 <div className='sm:col-span-2'>
-                  <label htmlFor="n_image" className=" block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of images</label>
-                  <input type="n_image"
-                    name="n_image"
+                  <label htmlFor="n_image" className="flex flex-row items-center justify-between mb-4 text-sm font-medium text-gray-900 dark:text-white">Number of images
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">{formData.body.n || 1}</p>
+                  </label>
+                  <input
+                    type="range"
+                    name="body.n"
                     id="n_image"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="1"
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     min={1}
                     max={10}
                     step={1}
                     required=""
-                    value={formData.n_image}
+                    value={formData.body.n || 1}
                     onChange={handleChange} />
                 </div>
               </>
