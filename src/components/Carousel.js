@@ -11,6 +11,12 @@ const Carousel = ({ items }) => {
   const onPrev = () => {
     setActiveItem(activeItem === 0 ? items.length - 1 : activeItem - 1);
   };
+
+  const handleError = (e) => {
+    e.target.onerror = null; // Prevents continuous error cycles
+    e.target.src = "carousel-1.svg"; // Load the default image
+  }
+
   return (
     <div className="flex justify-center mb-4">
       <div id="animation-carousel" className="relative w-full lg:w-full h-56 md:h-96 lg:h-[500px]" data-carousel="static">
@@ -20,7 +26,8 @@ const Carousel = ({ items }) => {
           {items.map((item, index) => (
             <div key={index} className={`duration-500 ease-in-out ${activeItem === index ? 'opacity-100' : 'opacity-0'}`} data-carousel-item>
               <img src={item.url}
-                className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
+                className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."
+                onError={handleError} />
             </div>
           ))}
 
