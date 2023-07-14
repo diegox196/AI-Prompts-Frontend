@@ -68,10 +68,43 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
     }
   }
 
+  const requestOpenAi = async () => {
+
+    let uri;
+    console.log(promptData.type);
+    switch (promptData.type) {
+      case "edit":
+        uri = process.env.REACT_APP_OPENAI_EDIT;
+        break;
+      case "image":
+        uri = process.env.REACT_APP_OPENAI_IMAGE;
+        break;
+      case "completion":
+        uri = uri = process.env.REACT_APP_OPENAI_COMPLETION;
+        break;
+      default:
+        uri = "";
+        break;
+    }
+    console.log(uri);
+    try {
+      return await axios.post(uri, formData.body, {
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`
+        }
+      });
+    } catch (error) {
+      console.log(error.message);
+      return null;
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Show loading button
     console.log(promptData.body);
+    const response = await requestOpenAi();
+    console.log(response);
     //await updateResponsePrompt();
     setIsLoading(false); // Hide loading button
   };
