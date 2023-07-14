@@ -43,19 +43,19 @@ function UserTable({ handleClick }) {
               <tbody  >
                 {userData.map(user => (
                   <tr key={user._id} className="border-t border-gray-200 dark:border-gray-700">
-                    <td className="py-2 px-4 text-center">{`${user.first_name} ${user.last_name}`}</td>
-                    <td className="py-2 px-4 text-center">{user.email}</td>
-                    <td className="py-2 px-4 text-center">
-                      <span
-                        className={`pb-0.5 px-1.5 rounded-lg text-sm font-medium ${user.active
-                          ? 'bg-green-100 text-green-800 dark:text-green-100 dark:bg-green-800'
-                          : 'bg-yellow-100 text-yellow-800 dark:text-yellow-100 dark:bg-yellow-800'
-                          }`}
-                      >
+                    <td className="py-3 px-4 text-center">{`${user.first_name} ${user.last_name}`}</td>
+                    <td className="py-3 px-4 text-center">{user.email}</td>
+                    <td className="py-3 px-4 text-center">
+                      <span className="flex items-center justify-center text-sm font-medium text-gray-900 dark:text-white">
+                        <span className={`flex w-2.5 h-2.5 rounded-full mr-1.5 flex-shrink-0 ${user.active
+                          ? 'bg-green-600'
+                          : 'bg-yellow-600'
+                          }`}>
+                        </span>
                         {user.active ? 'Active' : 'Pending'}
                       </span>
                     </td>
-                    <td className="py-2 px-4 text-center">
+                    <td className="py-3 px-4 text-center">
                       <button className="text-blue-500 mr-2" onClick={() => handleClick("View", user._id)}>
                         View
                       </button>

@@ -33,7 +33,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
 
   const imageArray = [
     {
-      url: "https://openailabsprodscus.blob.core.windows.net/private/user-eBvG9DFBkc4Rsbez2d2Dqhz0/generations/generation-acyz9l7SWRqRPSvwA5KVGsHe/image.webp?st=2023-07-13T06%3A52%3A40Z&se=2023-07-13T08%3A50%3A40Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/webp&skoid=15f0b47b-a152-4599-9e98-9cb4a58269f8&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-07-12T21%3A10%3A54Z&ske=2023-07-19T21%3A10%3A54Z&sks=b&skv=2021-08-06&sig=AG61a8qKkHlKwkJPi8pXLbpTa6%2B3FbUwgW9Qg/jxekk%3D"
+      url: "https://flowbite.com/docs/images/carousel/carousel-1.svg"
     },
     {
       url: "https://flowbite.com/docs/images/carousel/carousel-2.svg"
@@ -71,7 +71,8 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Show loading button
-    await updateResponsePrompt();
+    console.log(promptData.body);
+    //await updateResponsePrompt();
     setIsLoading(false); // Hide loading button
   };
 
@@ -124,7 +125,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
         </div>
 
         <h2 className="flex items-center text-1xl font-bold dark:text-white mb-4">Type
-          <small className="uppercase bg-blue-100 text-blue-800 mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-2">
+          <small className="uppercase mr-2 px-2.5 py-0.5 rounded bg-blue-200 text-blue-800 ml-2">
             {promptData.type}
           </small>
         </h2>
