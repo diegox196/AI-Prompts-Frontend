@@ -31,7 +31,7 @@ const HeaderWithFilter = ({ nResult }) => {
                     placeholder="Search"
                     required />
                   <button type="submit" 
-                  className="text-white absolute right-0 bottom-px bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-3 py-2 dark:bg-blue-600 dark:hover:bg-blue-700">Search</button>
+                  className="text-white absolute right-0 bottom-px bg-gray-700 hover:bg-gray-800 focus:outline-none font-medium rounded-lg text-sm px-3 py-2 dark:bg-gray-500 dark:hover:bg-gray-600">Search</button>
                 </div>
               </form>
             </div>

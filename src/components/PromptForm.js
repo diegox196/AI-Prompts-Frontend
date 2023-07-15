@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Alert from './Alert';
-import Chip from './Chip';
+import TagsInput from './TagsInput';
 
 const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
 
@@ -68,14 +68,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
         getBodyPrompt(value);
       }
 
-      if (name === "tags") {
-        // For the tags field, create an array with the selected values
-        const selectedTags = Array.from(e.target.selectedOptions, (option) => option.value);
-        setFormData((prevData) => ({
-          ...prevData,
-          tags: selectedTags
-        }));
-      } else if (name.startsWith("body.")) {
+      if (name.startsWith("body.")) {
         // For the nested fields under 'body', update the state accordingly
         const fieldName = name.split(".")[1];
         setFormData((prevData) => ({
@@ -96,6 +89,13 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
       console.error(error);
     }
   };
+
+  const updateTags = (data) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      tags: data
+    }));
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,8 +119,10 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
     goAllPrompts(true);
   }
 
-  const handleDeleteChip = (item) => {
-    console.log("eliminar " + item)
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
   }
 
   return (
@@ -136,7 +138,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
             <p className='text-black dark:text-gray-300'>You can only change the attributes of the edit prompt but not change the type of prompt.</p>}
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
           {errorMessage !== '' && <Alert type={"Danger"} message={errorMessage} />}
           <div className="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
@@ -144,6 +146,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
               <input type="text"
                 name="name"
                 id="name"
+                autoComplete="off"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Name"
                 required=""
@@ -272,10 +275,10 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
           </div>
 
           <div className="flex flex-wrap pb-4">
-            <Chip text={"Primary"} handleDeleteChip={handleDeleteChip} />
-            <Chip text={"Secondary"} handleDeleteChip={handleDeleteChip} />
-            <Chip text={"Other"} handleDeleteChip={handleDeleteChip} />
+            <h1 className="text-black dark:text-white font-semibold">Enter some tags related to your prompt</h1>
+            <TagsInput initValue={formData.tags} updateTags={updateTags} />
           </div>
+
 
           <div className="flex space-x-4">
             <button
