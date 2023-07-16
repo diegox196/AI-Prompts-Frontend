@@ -11,11 +11,19 @@ function App() {
 
   const [isLogged, setIsLogged] = useState(sessionStorage.getItem("auth") || false);
 
+  /**
+   * Function to handle the login process
+   * 
+   * @param {string} token - The authentication token
+   */
   const handleLogin = (token) => {
     setIsLogged(true);
     sessionStorage.setItem('auth', token);
   };
 
+  /**
+   * Function to handle the logout process
+   */
   const handleLogout = () => {
     setIsLogged(false);
     sessionStorage.removeItem('auth');
@@ -28,7 +36,7 @@ function App() {
     isLogged ?
       {
         path: "/",
-        element: <Dashboard handleLogout={handleLogout} typeView={"prompt"}/>,
+        element: <Dashboard handleLogout={handleLogout} typeView={"prompt"} />,
         errorElement: <Error />
       }
       : {

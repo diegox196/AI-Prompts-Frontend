@@ -8,6 +8,13 @@ import Carousel from './Carousel';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
+/**
+ * PlayPrompt component.
+ * Displays the prompt data and allows running the prompt.
+ *
+ * @param {object} promptData - The data of the prompt to display.
+ * @param {function} goAllPrompts - Callback function to navigate back to all prompts view.
+ */
 const PlayPrompt = ({ promptData, goAllPrompts }) => {
 
   const [formData, setFormData] = useState(promptData);
@@ -32,23 +39,16 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
   }
 
   const imageArray = [
-    {
-      url: "https://flowbite.com/docs/images/carousel/carousel-1.svg"
-    },
-    {
-      url: "https://flowbite.com/docs/images/carousel/carousel-2.svg"
-    },
-    {
-      url: "https://flowbite.com/docs/images/carousel/carousel-3.svg"
-    },
-    {
-      url: "https://flowbite.com/docs/images/carousel/carousel-4.svg"
-    },
-    {
-      url: "https://flowbite.com/docs/images/carousel/carousel-5.svg"
-    }
+    { url: "https://flowbite.com/docs/images/carousel/carousel-1.svg" },
+    { url: "https://flowbite.com/docs/images/carousel/carousel-2.svg" },
+    { url: "https://flowbite.com/docs/images/carousel/carousel-3.svg" },
+    { url: "https://flowbite.com/docs/images/carousel/carousel-4.svg" },
+    { url: "https://flowbite.com/docs/images/carousel/carousel-5.svg" },
   ];
 
+  /**
+   * Update the response of the prompt in the backend.
+   */
   const updateResponsePrompt = async () => {
 
     const newResponse = {
@@ -68,6 +68,11 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
     }
   }
 
+  /**
+   * Send the request to OpenAI API based on the prompt type.
+   *
+   * @returns {Promise} The response from the OpenAI API.
+   */
   const requestOpenAi = async () => {
 
     let uri;
@@ -109,10 +114,18 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
     setIsLoading(false); // Hide loading button
   };
 
+  /**
+   * Navigate back to all prompts view.
+   */
   const viewAllPrompt = () => {
     goAllPrompts(true);
   }
 
+  /**
+   * Verify if the response is a valid JSON and format it for display.
+   *
+   * @returns {string} The formatted JSON response.
+   */
   const verifyJSON = () => {
     try {
       // Convert to JSON object
@@ -125,6 +138,11 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
     }
   }
 
+  /**
+   * Get the text response from the JSON for display.
+   *
+   * @returns {string} The text response.
+   */
   const showTextResponse = () => {
     const json = JSON.parse(formData.response);
     if (json.choices && json.choices.length > 0) {
@@ -134,6 +152,11 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
     }
   }
 
+  /**
+   * Get the images for display.
+   *
+   * @returns {Array} The array of image objects.
+   */
   const getImages = () => {
     try {
       const images = JSON.parse(formData.response);

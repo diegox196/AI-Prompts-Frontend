@@ -3,7 +3,13 @@ import axios from 'axios';
 import EmptyState from './EmptyState';
 import HeaderWithFilter from './HeaderWithFilter';
 
-function PromptTable({ handleClick }) {
+/**
+ * PromptTable component.
+ * Renders the table containing prompt data, including name, type, tags, and actions.
+ *
+ * @param {function} handleClick - Function to handle the click event on view, edit, and delete buttons.
+ */
+const PromptTable = ({ handleClick }) => {
 
   const [promptData, setPromptData] = useState(null);
   const [isEmpty, setIsEmpty] = useState(false);
@@ -36,7 +42,7 @@ function PromptTable({ handleClick }) {
       {promptData &&
         <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
           <div className="rounded-lg bg-white dark:bg-gray-800">
-            <HeaderWithFilter nResult={promptData.length}/>
+            <HeaderWithFilter nResult={promptData.length} />
             <div className="overflow-x-auto shadow-md">
               <table className="w-full  dark:text-white">
                 <thead>

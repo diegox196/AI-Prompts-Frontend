@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ * Tag component displays a single tag with a delete button.
+ *
+ * @param {string} text - The text content of the tag
+ * @param {function} handleDelete - Function to handle tag deletion
+ */
 const Tag = ({ text, handleDelete }) => {
 
   return (

@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ * HeaderWithFilter component.
+ * Renders the header section with search and filter options, along with the result count.
+ *
+ * @param {number} nResult - The number of results to display.
+ */
 const HeaderWithFilter = ({ nResult }) => {
 
   return (
@@ -30,8 +36,8 @@ const HeaderWithFilter = ({ nResult }) => {
                     id="default-search"
                     placeholder="Search"
                     required />
-                  <button type="submit" 
-                  className="text-white absolute right-0 bottom-px bg-gray-700 hover:bg-gray-800 focus:outline-none font-medium rounded-lg text-sm px-3 py-2 dark:bg-gray-500 dark:hover:bg-gray-600">Search</button>
+                  <button type="submit"
+                    className="text-white absolute right-0 bottom-px bg-gray-700 hover:bg-gray-800 focus:outline-none font-medium rounded-lg text-sm px-3 py-2 dark:bg-gray-500 dark:hover:bg-gray-600">Search</button>
                 </div>
               </form>
             </div>

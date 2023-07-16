@@ -2,6 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Alert from './Alert';
 import TagsInput from './TagsInput';
 
+/**
+ * PromptForm component displays a form for creating or editing a prompt.
+ * It allows users to enter prompt details such as name, type, and body.
+ *
+ * @param {string} formType - The type of form ('Create' or 'Edit')
+ * @param {Object} promptData - The initial data for the prompt
+ * @param {function} handleSave - Function to handle saving the prompt
+ * @param {function} goAllPrompts - Function to navigate back to all prompts view
+ */
 const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
 
   const [typeSelected, setTypeSelected] = useState("completion");
@@ -31,6 +40,11 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
     getBodyPrompt(promptData.type);
   }, [promptData]);
 
+  /**
+  * Sets the body of the form based on the selected prompt type
+  *
+  * @param {string} promptType - The selected prompt type
+  */
   const getBodyPrompt = (promptType) => {
     switch (promptType) {
       case "edit":
@@ -90,6 +104,11 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
     }
   };
 
+  /**
+   * Updates the tags in the form data
+   *
+   * @param {array} data - The updated tags array
+   */
   const updateTags = (data) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -115,10 +134,18 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
     }
   };
 
+  /**
+   * Navigates back to the all prompts view
+   */
   const viewAllPrompt = () => {
     goAllPrompts(true);
   }
 
+  /**
+   * Handles the keydown event on the form
+   *
+   * @param {object} event - The keydown event object
+   */
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();

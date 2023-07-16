@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import Alert from '../components/Alert';
 import LoadingButton from '../components/LoadingButton';
 
+/**
+ * Login screen displays a login form for users to sign in to their account.
+ * 
+ * @param {Object} handleLogin - Function to handle the login process
+ */
 const Login = ({ handleLogin }) => {
 
   const [formData, setFormData] = useState({

@@ -7,6 +7,13 @@ import CreateEditPrompt from './CreateEditPrompt';
 import ViewPrompt from './ViewPrompt';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 
+/**
+ * Prompts component.
+ * Renders the prompt table, view prompt, and creation/editing form, and delete confirmation modal.
+ *
+ * @param {boolean} isAllPrompt - Determine if the prompt table should be displayed.
+ * @param {function} setIsAllPrompt - Function to update the isAllPrompt state.
+ */
 const Prompts = ({ isAllPrompt, setIsAllPrompt }) => {
   const [promptId, setPromptId] = useState("");
   const [isShowModal, setIsShowModal] = useState(false);
@@ -17,6 +24,11 @@ const Prompts = ({ isAllPrompt, setIsAllPrompt }) => {
     setIsAllPrompt(go);
   }
 
+  /**
+   * Deletes a prompt from the database.
+   *
+   * @param {string} id The ID of the prompt to delete.
+   */
   const deletePrompt = async (id) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_URI}/api/prompt/${id}`, {
@@ -30,10 +42,12 @@ const Prompts = ({ isAllPrompt, setIsAllPrompt }) => {
   }
 
   /**
-   * Controls the actions of the table's view, edit and delete buttons and the prompt id
-   * 
-   * @param {string} type View - Edit - Delete
-   * @param {string} id e35e12e5awd5awd
+   * Controls the actions of the table's view, edit, and delete buttons and sets the prompt ID.
+   * If the action is "Delete", the delete confirmation modal is displayed.
+   * Otherwise, the isAllPrompt state is set to false.
+   *
+   * @param {string} type - The action type (e.g., "View", "Edit", "Delete").
+   * @param {string} id - The ID of the prompt.
    */
   const handleClick = (type, id) => {
     setPromptId(id);

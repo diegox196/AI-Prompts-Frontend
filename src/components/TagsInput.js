@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Tag from './Tag';
 
+/**
+ * TagsInput component allows users to enter and manage tags.
+ *
+ * @param {array} initValue - The initial tags array
+ * @param {function} updateTags - Function to update the tags array
+ */
 const TagsInput = ({ initValue, updateTags }) => {
   const [tags, setTags] = useState([]);
 
+  /**
+   * Handles the keydown event on the input field
+   *
+   * @param {object} event - The keydown event object
+   */
   const handleKeyDown = (e) => {
     if (e.key !== "Enter") {
       return;
@@ -24,6 +35,11 @@ const TagsInput = ({ initValue, updateTags }) => {
     e.target.value = "";
   };
 
+  /**
+   * Deletes a tag at the specified index
+   *
+   * @param {number} index - The index of the tag to delete
+   */
   const handleDelete = (index) => {
     setTags(tags.filter((value, i) => i !== index));
   }

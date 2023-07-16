@@ -3,12 +3,13 @@ import axios from 'axios';
 import PromptForm from '../components/PromptForm';
 
 /**
-   * Controls the actions of view, create and edit
-   * 
-   * @param {String} action View - Edit - Add new
-   * @param {String} promptId e35e12e5awd5awd
-   * @param {Function} goAllPrompts function to go to the main prompts
-   */
+* CreateEditPrompt page.
+* Allows creating or editing a prompt.
+*
+* @param {string} action - The action to perform (Create or Edit).
+* @param {string} promptId - The ID of the prompt to edit.
+* @param {function} goAllPrompts - Callback function to navigate back to all prompts view.
+*/
 const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
 
   const userId = JSON.parse(sessionStorage.getItem("user")).user_id
@@ -45,6 +46,12 @@ const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
     getPromptData();
   }, []);
 
+  /**
+   * Updates a prompt with new data.
+   *
+   * @param {object} newData - The updated prompt data.
+   * @returns {object} - The updated prompt data or an error response.
+   */
   const updateNewPrompt = async (newData) => {
     try {
       const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/prompt/${newData._id}`, newData, {
@@ -58,6 +65,12 @@ const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
     }
   };
 
+  /**
+   * Creates a new prompt with the provided data.
+   *
+   * @param {object} newData - The data of the new prompt.
+   * @returns {object} - The created prompt data or an error response.
+   */
   const createNewPrompt = async (newData) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/prompt`, newData, {
@@ -71,6 +84,12 @@ const CreateEditPrompt = ({ action, promptId, goAllPrompts }) => {
     }
   };
 
+  /**
+   * Handles the save action for the prompt data.
+   *
+   * @param {object} newData - The updated prompt data or new prompt data.
+   * @returns {object} - The updated or created prompt data, or an error response.
+   */
   const handleSave = async (newData) => {
     if (action === "Edit") {
       return await updateNewPrompt(newData);

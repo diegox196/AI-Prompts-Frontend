@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import Alert from '../components/Alert';
 
+/**
+ * Signup page for user registration
+ */
 const Signup = () => {
 
   const [formData, setFormData] = useState({
@@ -26,6 +29,12 @@ const Signup = () => {
     }));
   };
 
+  /**
+   * Function to create a new user
+   * 
+   * @param {Object} newData - The new user data
+   * @returns {Object} - The response data or error
+   */
   const createNewUser = async (newData) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/user`, newData);

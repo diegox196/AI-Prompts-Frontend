@@ -40,9 +40,11 @@ const Users = ({ isAllUser, setIsAllUser }) => {
   }
 
   /**
-   * Controls the actions of the table's view, edit and delete buttons and the user id
-   * 
-   * @param {string} type - The type of action (View, Edit, Delete)
+   * Controls the actions of the table's view, edit, and delete buttons and sets the user ID.
+   * If the action is "Delete", the delete confirmation modal is displayed.
+   * Otherwise, the isAllPrompt state is set to false.
+   *
+   * @param {string} type - The action type (e.g., "View", "Edit", "Delete").
    * @param {string} id - The ID of the user.
    */
   const handleClick = (type, id) => {

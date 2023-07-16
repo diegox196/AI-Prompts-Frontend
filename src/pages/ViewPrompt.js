@@ -3,11 +3,12 @@ import axios from 'axios';
 import PlayPrompt from '../components/PlayPrompt';
 
 /**
-   * Controls the actions of view, create and edit
-   * 
-   * @param {string} type View - Edit - Add new
-   * @param {string} id e35e12e5awd5awd
-   */
+ * ViewPrompt component.
+ * Fetches and displays the data of a specific prompt.
+ *
+ * @param {string} promptId - The ID of the prompt to view.
+ * @param {function} goAllPrompts - Callback function to navigate back to all prompts view.
+ */
 const ViewPrompt = ({ promptId, goAllPrompts }) => {
 
   const [promptData, setPromptData] = useState(null);

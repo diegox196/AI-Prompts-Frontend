@@ -1,17 +1,32 @@
 import React, { useState } from 'react';
 
+/**
+ * Carousel component displays a slideshow of images with navigation buttons.
+ *
+ * @param {Array} items - An array of objects representing the images to display in the carousel. Each object should have a "url" property specifying the image URL.
+ */
 const Carousel = ({ items }) => {
 
   const [activeItem, setActiveItem] = useState(0);
 
+  /**
+   * Handle the next button click event
+   */
   const onNext = () => {
     setActiveItem(activeItem === items.length - 1 ? 0 : activeItem + 1);
   };
 
+  /**
+   * Handle the previous button click event
+   */
   const onPrev = () => {
     setActiveItem(activeItem === 0 ? items.length - 1 : activeItem - 1);
   };
 
+  /**
+   * Handle image load error by replacing the broken image with a default image
+   * @param {object} e - The image load event
+   */
   const handleError = (e) => {
     e.target.onerror = null; // Prevents continuous error cycles
     e.target.src = "carousel-1.svg"; // Load the default image
