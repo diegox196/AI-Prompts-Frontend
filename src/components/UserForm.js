@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Alert from './Alert';
 
+/**
+ * UserForm component.
+ * Renders a form for creating, editing, or viewing user data.
+ *
+ * @param {string} type - The type of user form (e.g., "View", "Add new", "Edit").
+ * @param {object} userData - The user data to populate the form fields.
+ * @param {function} handleSave - The function to handle saving the user data.
+ * @param {function} goAllUsers - The function to navigate back to the list of all users.
+ */
 const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
 
   const [formData, setFormData] = useState(userData);
@@ -11,6 +20,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
   const isViewMode = type === 'View';
   const isCreateMode = type === 'Add new';
 
+  // Update the formData state when user data changes
   useEffect(() => {
     setFormData(userData);
   }, [userData]);
@@ -27,7 +37,6 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
     // Validate empty fields
     const isEmptyField = Object.values(formData).some((value) => value === "");
     if (isEmptyField) {
@@ -36,7 +45,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
     }
 
     if (isCreateMode) {
-      // Validate passwords
+      // Validate passwords in create mode
       if (formData.password !== confirmPassword) {
         setErrorMessage("Passwords do not match");
         return;

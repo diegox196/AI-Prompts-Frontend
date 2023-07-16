@@ -2,9 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EmptyState from './EmptyState';
 
-function UserTable({ handleClick }) {
-  const [userData, setUserData] = useState(null);
-  const [isEmpty, setIsEmpty] = useState(false);
+/**
+ * UserTable component.
+ * Renders a table with user data, including name, email, status, and actions.
+ *
+ * @param {function} handleClick - Function to handle the click events on the actions buttons.
+ */
+const UserTable = ({ handleClick }) => {
+  const [userData, setUserData] = useState(null); // State to store the user data
+  const [isEmpty, setIsEmpty] = useState(false); // State to check if the user data is empty
 
   useEffect(() => {
     getUsersData();
@@ -45,7 +51,7 @@ function UserTable({ handleClick }) {
                   <th className="py-2 px-4">Actions</th>
                 </tr>
               </thead>
-              <tbody  >
+              <tbody>
                 {userData.map(user => (
                   <tr key={user._id} className="border-t border-gray-200 dark:border-gray-700">
                     <td className="py-3 px-4 text-center">{`${user.first_name} ${user.last_name}`}</td>

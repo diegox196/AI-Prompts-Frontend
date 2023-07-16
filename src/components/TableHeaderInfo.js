@@ -1,7 +1,20 @@
 import React from 'react';
 
+/**
+ * TableHeaderInfo component.
+ * Renders the header section of the table with information about the type (e.g., Users, Prompts)
+ * and a button to add a new item of that type.
+ *
+ * @param {string} type - The type of items (e.g., "user", "prompt").
+ * @param {function} setTypeAction - Function to set the type of action.
+ * @param {function} goAllData - Function to navigate back to all data view.
+ */
 const TableHeaderInfo = ({ type, setTypeAction, goAllData }) => {
 
+  /**
+   * Handles the creation of a new item.
+   * Sets the `goAllData` state to false and updates the `setTypeAction` state to "Add new".
+   */
   const handleCreate = () => {
     goAllData(false);
     setTypeAction("Add new");

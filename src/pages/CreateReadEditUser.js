@@ -3,14 +3,14 @@ import UserForm from '../components/UserForm';
 import axios from 'axios';
 
 /**
-   * Controls the actions of view, create and edit
-   * 
-   * @param {String} action View - Edit - Add new
-   * @param {String} promptId e35e12e5awd5awd
-   * @param {Function} goAllPrompts function to go to the main users
-   */
+ * CreateReadEditUser page.
+ * Renders a form for creating, reading, or editing user data.
+ *
+ * @param {string} action - The type of action to perform (e.g., "Add new", "Edit", "View").
+ * @param {string} userId - The ID of the user being edited.
+ * @param {function} goAllUsers - Function to go back to displaying all users.
+ */
 const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
-
   let initData = {
     "email": "",
     "username": "",
@@ -44,6 +44,12 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
     getUserData();
   }, [userId]);
 
+  /**
+   * Updates a user with new data.
+   *
+   * @param {object} newData - The updated user data.
+   * @returns {object} - The updated user data or an error response.
+   */
   const updateNewUser = async (newData) => {
     try {
       const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/user/${newData._id}`, newData, {
@@ -57,6 +63,12 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
     }
   };
 
+  /**
+   * Creates a new user with the provided data.
+   *
+   * @param {object} newData - The data of the new user.
+   * @returns {object} - The created user data or an error response.
+   */
   const createNewUser = async (newData) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/user`, newData);
@@ -66,6 +78,12 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
     }
   };
 
+  /**
+   * Handles the save action for the user data.
+   *
+   * @param {object} newData - The updated user data or new user data.
+   * @returns {object} - The updated or created user data, or an error response.
+   */
   const handleSave = async (newData) => {
     if (action === "Edit") {
       return await updateNewUser(newData);

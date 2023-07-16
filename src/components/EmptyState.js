@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ * EmptyState component.
+ * Renders a message when there are no items to display.
+ *
+ * @param {string} item - The type of item (e.g., "users", "prompts").
+ */
 const EmptyState = ({ item }) => {
   return (
     <section className="h-full w-full px-4 py-4 mx-auto lg:px-12">
