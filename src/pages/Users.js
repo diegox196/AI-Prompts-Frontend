@@ -6,16 +6,27 @@ import UserTable from '../components/UserTable';
 import CreateReadEditUser from './CreateReadEditUser';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 
+/**
+ * Users page.
+ * Renders the users table, user creation/editing form, and delete confirmation modal.
+ *
+ * @param {boolean} isAllUser - Determine if all users should be displayed.
+ * @param {function} setIsAllUser - Function to update the isAllUser state.
+ */
 const Users = ({ isAllUser, setIsAllUser }) => {
   const [userId, setUserId] = useState("");
-  const [isShowModal, setIsShowModal] = useState(false);
-
-  let [typeAction, setTypeAction] = useState("Add new");
+  const [isShowModal, setIsShowModal] = useState(false); // State to control the visibility of the delete confirmation modal
+  let [typeAction, setTypeAction] = useState("Add new"); // State to store the type of action (Add new, View, Edit, Delete)
 
   const goAllUsers = (go) => {
     setIsAllUser(go);
   }
 
+  /**
+   * Deletes a user from the database.
+   *
+   * @param {string} id The ID of the user to delete.
+   */
   const deleteUser = async (id) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_URI}/api/user/${id}`, {
@@ -31,8 +42,8 @@ const Users = ({ isAllUser, setIsAllUser }) => {
   /**
    * Controls the actions of the table's view, edit and delete buttons and the user id
    * 
-   * @param {string} type View - Edit - Delete
-   * @param {string} id e35e12e5awd5awd
+   * @param {string} type - The type of action (View, Edit, Delete)
+   * @param {string} id - The ID of the user.
    */
   const handleClick = (type, id) => {
     setUserId(id);

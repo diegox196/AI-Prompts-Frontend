@@ -4,7 +4,7 @@ const Tag = ({ text, handleDelete }) => {
 
   return (
     <div
-      className="my-[5px] p-1 mr-3 flex items-center justify-between rounded-[16px] bg-blue-500/20 font-normal text-white">
+      className="my-[5px] p-1 mr-3 flex items-center justify-between rounded-[16px] bg-gray-700 text-white dark:bg-blue-500/30 dark:text-white font-normal">
       <span className="px-3 uppercase text-xs font-bold"> {text} </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"

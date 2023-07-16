@@ -10,6 +10,11 @@ function UserTable({ handleClick }) {
     getUsersData();
   }, []);
 
+  /**
+   * Retrieves user data from the API.
+   * Sets the `userData` state with the retrieved data.
+   * Checks if the retrieved data is empty and updates the `isEmpty` state accordingly.
+   */
   const getUsersData = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/user`, {

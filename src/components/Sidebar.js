@@ -1,7 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Sidebar = ({ isNavbarOpen, handleLogout, onHandleClick }) => {
+/**
+ * Sidebar component.
+ * Renders the sidebar menu with navigation links.
+ *
+ * @param {boolean} isNavbarOpen - Control the open/closed state of the sidebar.
+ * @param {function} handleLogout - Function to handle user logout.
+ * @param {function} onHandleClick - Function to handle the click event on the sidebar.
+ */
+ const Sidebar = ({ isNavbarOpen, handleLogout, onHandleClick }) => {
 
   const promptRoute = "/prompt";
   const userRoute = "/user";

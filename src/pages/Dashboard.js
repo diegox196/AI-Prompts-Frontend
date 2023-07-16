@@ -5,10 +5,17 @@ import Sidebar from '../components/Sidebar';
 import Users from './Users';
 import Prompts from './Prompts';
 
+/**
+ * Dashboard page.
+ * Renders the sidebar, navbar, and the main content (Users or Prompts).
+ *
+ * @param {function} handleLogout - Function to handle user logout.
+ * @param {string} typeView - Type of view to display (user or prompt).
+ */
 const Dashboard = ({ handleLogout, typeView }) => {
 
-  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
-  const [isMainScreen, setIsMainScreen] = useState(true);
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State to control the open/closed state of the navbar
+  const [isMainScreen, setIsMainScreen] = useState(true); //Allows to display the tables or the action screen (create or edit)
 
   const handleNavbarToggle = () => {
     setIsNavbarOpen(!isNavbarOpen);

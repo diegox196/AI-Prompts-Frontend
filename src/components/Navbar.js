@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
+/**
+ * Navbar component.
+ * Renders the navigation bar with the logo, title, and user profile.
+ *
+ * @param {function} handleNavbarToggle - Function to handle toggling the navbar.
+ */
 const Navbar = ({ handleNavbarToggle }) => {
 
   const title = "AIPrompt";
