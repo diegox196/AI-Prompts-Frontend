@@ -37,14 +37,8 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
       });
-      console.log("openData");
-      console.log(openData);
-      const response = {
-        response: JSON.stringify({ data: openData })
-      };
-      console.log("Formateado");
-      console.log(openData);
-      return response;
+      console.log(openData.data);
+      return openData.data;
     } catch (error) {
       console.log(error);
       return null;
@@ -52,8 +46,9 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
   }
 
   const updateResponsePrompt = async (newResponse) => {
+    const body = { response: JSON.stringify(newResponse) };
     try {
-      const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/prompt/${formData._id}`, newResponse, {
+      const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/prompt/${formData._id}`, body, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
@@ -69,7 +64,9 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
     e.preventDefault();
     setIsLoading(true); // Show loading button
     const response = await requestOpenAi();
-    await updateResponsePrompt(response);
+    if (response) {
+      await updateResponsePrompt(response);
+    }
     setIsLoading(false); // Hide loading button
   };
 
@@ -131,7 +128,6 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
       console.log(error);
       return imageArray;
     }
-
   }
 
   return (
