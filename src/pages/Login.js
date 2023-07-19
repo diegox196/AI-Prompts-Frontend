@@ -17,7 +17,7 @@ const Login = ({ handleLogin }) => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,8 +30,8 @@ const Login = ({ handleLogin }) => {
       const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/session`, formData);
       handleLogin(response.data.tokenSession);
       sessionStorage.setItem("user", JSON.stringify(response.data.user));
-    } catch (error) {
-      setError(true);
+    } catch (err) {
+      setError(err.response.data.error);
     }
     setIsLoading(false);
   };
@@ -51,7 +51,7 @@ const Login = ({ handleLogin }) => {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         {error && (
-          <Alert type={"Danger"} message={"Incorrect username or password."} />
+          <Alert type={"Danger"} message={error} />
         )}
         <form className="space-y-6" method="POST" onSubmit={handleSubmit}>
           <div>

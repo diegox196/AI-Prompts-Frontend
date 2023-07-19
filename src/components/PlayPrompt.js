@@ -22,22 +22,6 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isShowJSON, setIsShowJSON] = useState(false);
 
-  const jsonResponse = {
-    "object": "edit",
-    "created": 1589478378,
-    "choices": [
-      {
-        "text": "What day of the week is it?",
-        "index": 0,
-      }
-    ],
-    "usage": {
-      "prompt_tokens": 25,
-      "completion_tokens": 32,
-      "total_tokens": 57
-    }
-  }
-
   const imageArray = [
     { url: "https://flowbite.com/docs/images/carousel/carousel-1.svg" },
     { url: "https://flowbite.com/docs/images/carousel/carousel-2.svg" },
@@ -46,15 +30,28 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
     { url: "https://flowbite.com/docs/images/carousel/carousel-5.svg" },
   ];
 
-  /**
-   * Update the response of the prompt in the backend.
-   */
-  const updateResponsePrompt = async () => {
-
-    const newResponse = {
-      response: JSON.stringify(jsonResponse)
+  const requestOpenAi = async () => {
+    try {
+      const openData = await axios.post(`${process.env.REACT_APP_API_URI}/api/openai/${promptData.type}`, formData.body, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
+      console.log("openData");
+      console.log(openData);
+      const response = {
+        response: JSON.stringify({ data: openData })
+      };
+      console.log("Formateado");
+      console.log(openData);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
+  }
 
+  const updateResponsePrompt = async (newResponse) => {
     try {
       const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/prompt/${formData._id}`, newResponse, {
         headers: {
@@ -68,49 +65,11 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
     }
   }
 
-  /**
-   * Send the request to OpenAI API based on the prompt type.
-   *
-   * @returns {Promise} The response from the OpenAI API.
-   */
-  const requestOpenAi = async () => {
-
-    let uri;
-    console.log(promptData.type);
-    switch (promptData.type) {
-      case "edit":
-        uri = process.env.REACT_APP_OPENAI_EDIT;
-        break;
-      case "image":
-        uri = process.env.REACT_APP_OPENAI_IMAGE;
-        break;
-      case "completion":
-        uri = uri = process.env.REACT_APP_OPENAI_COMPLETION;
-        break;
-      default:
-        uri = "";
-        break;
-    }
-    console.log(uri);
-    try {
-      return await axios.post(uri, formData.body, {
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`
-        }
-      });
-    } catch (error) {
-      console.log(error.message);
-      return null;
-    }
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Show loading button
-    console.log(promptData.body);
     const response = await requestOpenAi();
-    console.log(response);
-    //await updateResponsePrompt();
+    await updateResponsePrompt(response);
     setIsLoading(false); // Hide loading button
   };
 
@@ -144,12 +103,17 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
    * @returns {string} The text response.
    */
   const showTextResponse = () => {
-    const json = JSON.parse(formData.response);
-    if (json.choices && json.choices.length > 0) {
-      return json.choices[0].text;
-    } else {
-      return "No choices found in the JSON response.";
+    try {
+      const json = JSON.parse(formData.response);
+      if (json.choices && json.choices.length > 0) {
+        return json.choices[0].text;
+      } else {
+        return "No choices found in the JSON response.";
+      }
+    } catch (error) {
+      return "";
     }
+
   }
 
   /**
@@ -164,6 +128,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
         return images.data;
       }
     } catch (error) {
+      console.log(error);
       return imageArray;
     }
 
@@ -220,21 +185,22 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
 
 
           {promptData.type !== 'image' ?
-            <><div className="mb-3 bg-gray-300 dark:bg-gray-700 rounded-xl">
-              <div className="flex justify-start p-3">
-                <p className={`${!isShowJSON && "bg-gray-100 dark:bg-gray-500"} p-2 text-1xl font-bold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500 rounded-lg cursor-pointer`}
-                  onClick={() => setIsShowJSON(false)}>
-                  Response</p>
-                <p className={`${isShowJSON && "bg-gray-100 dark:bg-gray-500"} p-2 ml-1 text-1xl font-bold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500 rounded-lg cursor-pointer`}
-                  onClick={() => setIsShowJSON(true)}>
-                  JSON</p>
+            <>
+              <div className="mb-3 bg-gray-300 dark:bg-gray-700 rounded-xl">
+                <div className="flex justify-start p-3">
+                  <p className={`${!isShowJSON && "bg-gray-100 dark:bg-gray-500"} p-2 text-1xl font-bold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500 rounded-lg cursor-pointer`}
+                    onClick={() => setIsShowJSON(false)}>
+                    Response</p>
+                  <p className={`${isShowJSON && "bg-gray-100 dark:bg-gray-500"} p-2 ml-1 text-1xl font-bold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500 rounded-lg cursor-pointer`}
+                    onClick={() => setIsShowJSON(true)}>
+                    JSON</p>
+                </div>
+                <div className="p-3 rounded-b-xl bg-[#001727]">
+                  <SyntaxHighlighter language="json" style={nightOwl}>
+                    {isShowJSON ? verifyJSON() : showTextResponse()}
+                  </SyntaxHighlighter>
+                </div>
               </div>
-              <div className="p-3 rounded-b-xl bg-[#001727]">
-                <SyntaxHighlighter language="json" style={nightOwl}>
-                  {isShowJSON ? verifyJSON() : showTextResponse()}
-                </SyntaxHighlighter>
-              </div>
-            </div>
             </>
             :
             <Carousel items={getImages()} />

@@ -22,13 +22,13 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
   ];
 
   const modelCompletion = [
-    "text-davinci-edit-001",
-    "code-davinci-edit-001",
-    "gpt-3.5-turbo-16k-0613",
-    "gpt-3.5-turbo-16k",
-    "gpt-3.5-turbo-0301",
-    "gpt-3.5-turbo",
-    "gpt-3.5-turbo-0613"
+    "babbage",
+    "text-davinci-003",
+    "davinci",
+    "text-davinci-001",
+    "ada",
+    "text-curie-001",
+    "text-ada-001"
   ]
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
     switch (promptType) {
       case "edit":
         formData.body = {
-          model: "",
+          model: "text-davinci-edit-001",
           input: "",
           instruction: "",
           temperature: 1
@@ -57,9 +57,9 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
         break;
       case "completion":
         formData.body = {
-          model: "",
+          model: "text-davinci-003",
           prompt: "",
-          max_tokens: 1,
+          max_tokens: 256,
           temperature: 1
         };
         break;
@@ -71,7 +71,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
         };
         break;
     }
-  }
+  };
 
   const handleChange = (e) => {
     try {
@@ -118,13 +118,6 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate empty fields
-    /*const isEmptyField = Object.values(formData).some((value) => value === "");
-    if (isEmptyField) {
-      setErrorMessage("Please fill in all fields");
-      return;
-    }*/
 
     const isSaved = await handleSave(formData);
     if (isSaved.error) {
@@ -176,7 +169,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
                 autoComplete="off"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Name"
-                required=""
+                required
                 value={formData.name}
                 onChange={handleChange} />
             </div>
@@ -202,6 +195,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
                 <textarea id="input" rows="4" className="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="The input text to use as a starting point for the edit"
                   name="body.input"
+                  required
                   value={formData.body.input}
                   onChange={handleChange}>
                 </textarea>
@@ -248,8 +242,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
                   max="2"
                   step={0.1}
                   value={formData.body.temperature || 1}
-                  onChange={handleChange}
-                  required="" />
+                  onChange={handleChange} />
               </div>
 
               <div>
@@ -259,10 +252,12 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
                   name="body.model"
                   value={formData.body.model}
                   onChange={handleChange}
+                  defaultValue={modelCompletion[1]}
                 >
-                  {typeSelected === "edit" ? modelEdit.map((model) => (
-                    <option key={model} value={model}>{model}</option>
-                  ))
+                  {typeSelected === "edit"
+                    ? modelEdit.map((model) => (
+                      <option key={model} value={model}>{model}</option>
+                    ))
                     : modelCompletion.map((model) => (
                       <option key={model} value={model}>{model}</option>
                     ))}
