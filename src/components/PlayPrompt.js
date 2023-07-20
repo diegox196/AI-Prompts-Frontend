@@ -37,7 +37,6 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
       });
-      console.log(openData.data);
       return openData.data;
     } catch (error) {
       console.log(error);
@@ -180,27 +179,35 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
           {errorMessage !== '' && <Alert type={"Danger"} message={errorMessage} />}
 
 
-          {promptData.type !== 'image' ?
-            <>
-              <div className="mb-3 bg-gray-300 dark:bg-gray-700 rounded-xl">
-                <div className="flex justify-start p-3">
-                  <p className={`${!isShowJSON && "bg-gray-100 dark:bg-gray-500"} p-2 text-1xl font-bold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500 rounded-lg cursor-pointer`}
-                    onClick={() => setIsShowJSON(false)}>
-                    Response</p>
-                  <p className={`${isShowJSON && "bg-gray-100 dark:bg-gray-500"} p-2 ml-1 text-1xl font-bold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500 rounded-lg cursor-pointer`}
-                    onClick={() => setIsShowJSON(true)}>
-                    JSON</p>
+          {promptData.response !== "" && (
+            promptData.type !== 'image' ? (
+              <>
+                <div className="mb-3 bg-gray-300 dark:bg-gray-700 rounded-xl">
+                  <div className="flex justify-start p-3">
+                    <p
+                      className={`${!isShowJSON && "bg-gray-100 dark:bg-gray-500"} p-2 text-1xl font-bold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500 rounded-lg cursor-pointer`}
+                      onClick={() => setIsShowJSON(false)}
+                    >
+                      Response
+                    </p>
+                    <p
+                      className={`${isShowJSON && "bg-gray-100 dark:bg-gray-500"} p-2 ml-1 text-1xl font-bold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500 rounded-lg cursor-pointer`}
+                      onClick={() => setIsShowJSON(true)}
+                    >
+                      JSON
+                    </p>
+                  </div>
+                  <div className="p-3 rounded-b-xl bg-[#001727]">
+                    <SyntaxHighlighter language="json" style={nightOwl}>
+                      {isShowJSON ? verifyJSON() : showTextResponse()}
+                    </SyntaxHighlighter>
+                  </div>
                 </div>
-                <div className="p-3 rounded-b-xl bg-[#001727]">
-                  <SyntaxHighlighter language="json" style={nightOwl}>
-                    {isShowJSON ? verifyJSON() : showTextResponse()}
-                  </SyntaxHighlighter>
-                </div>
-              </div>
-            </>
-            :
-            <Carousel items={getImages()} />
-          }
+              </>
+            ) : (
+              <Carousel items={getImages()} />
+            )
+          )}
 
         </form>
       </div>

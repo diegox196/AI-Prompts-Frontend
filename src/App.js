@@ -29,14 +29,16 @@ function App() {
     sessionStorage.removeItem('auth');
   };
 
-  const isAdmin = true;
+  const role = JSON.parse(sessionStorage.getItem("user")).role;
+  const isAdmin = role === "admin";
+  const mainRoute = isAdmin ? "user" : "prompt"
 
   const router = createBrowserRouter([
 
-    isLogged ?
-      {
+    isLogged
+      ? {
         path: "/",
-        element: <Dashboard handleLogout={handleLogout} typeView={"prompt"} />,
+        element: <Dashboard handleLogout={handleLogout} typeView={mainRoute} />,
         errorElement: <Error />
       }
       : {
@@ -48,14 +50,16 @@ function App() {
       path: "/signup",
       element: <Signup />
     },
-    {
-      path: "/prompt",
-      element: <Dashboard handleLogout={handleLogout} typeView={"prompt"} />
-    },
-    isAdmin && {
-      path: "/user",
-      element: <Dashboard handleLogout={handleLogout} typeView={"user"} />
-    }
+
+    isAdmin
+      ? {
+        path: "/user",
+        element: <Dashboard handleLogout={handleLogout} typeView={"user"} />
+      }
+      : {
+        path: "/prompt",
+        element: <Dashboard handleLogout={handleLogout} typeView={"prompt"} />
+      }
   ]);
 
   return (

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const Navbar = ({ handleNavbarToggle }) => {
 
   const title = "AIPrompt";
-  const routeIcon = "/prompt";
+  const routeIcon = "/";
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   return (
