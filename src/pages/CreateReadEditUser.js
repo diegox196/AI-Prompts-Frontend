@@ -25,7 +25,7 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
 
   useEffect(() => {
     const getUserData = async () => {
-      if (action === "Edit") {
+      if (action === "Edit" || action === "View") {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/user/${userId}`, {
             headers: {
@@ -36,12 +36,10 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
         } catch (error) {
           console.error('Error al obtener los datos del usuario:', error);
         }
-      } else {
-        setUserData(initData);
       }
     };
 
-    getUserData();
+    getUserData(userData);
   }, [userId]);
 
   /**
