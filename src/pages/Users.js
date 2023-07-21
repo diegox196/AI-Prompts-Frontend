@@ -23,23 +23,6 @@ const Users = ({ isAllUser, setIsAllUser }) => {
   }
 
   /**
-   * Deletes a user from the database.
-   *
-   * @param {string} id The ID of the user to delete.
-   */
-  const deleteUser = async (id) => {
-    try {
-      await axios.delete(`${process.env.REACT_APP_API_URI}/api/user/${id}`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
-        }
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  /**
    * Controls the actions of the table's view, edit, and delete buttons and sets the user ID.
    * If the action is "Delete", the delete confirmation modal is displayed.
    * Otherwise, the isAllPrompt state is set to false.
@@ -61,6 +44,23 @@ const Users = ({ isAllUser, setIsAllUser }) => {
   const handleClose = () => {
     setIsShowModal(false);
   };
+
+  /**
+ * Deletes a user from the database.
+ *
+ * @param {string} id The ID of the user to delete.
+ */
+  const deleteUser = async (id) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_URI}/api/user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleConfirm = () => {
     deleteUser(userId);

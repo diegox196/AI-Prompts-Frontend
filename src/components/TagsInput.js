@@ -41,7 +41,8 @@ const TagsInput = ({ initValue, updateTags }) => {
    * @param {number} index - The index of the tag to delete
    */
   const handleDelete = (index) => {
-    setTags(tags.filter((value, i) => i !== index));
+    let newTags = tags.filter((value, i) => i !== index);
+    updateTags(newTags);
   }
 
   useEffect(() => {

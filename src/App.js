@@ -29,7 +29,9 @@ function App() {
     sessionStorage.removeItem('auth');
   };
 
-  const role = JSON.parse(sessionStorage.getItem("user")).role;
+  const userJSON = sessionStorage.getItem("user");
+  const user = userJSON ? JSON.parse(userJSON) : { role: "user" };
+  const role = user.role;
   const isAdmin = role === "admin";
   const mainRoute = isAdmin ? "user" : "prompt"
 
