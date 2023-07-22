@@ -6,6 +6,7 @@ import React, { useState } from 'react';
  * @param {Array} items - An array of objects representing the images to display in the carousel. Each object should have a "url" property specifying the image URL.
  */
 const Carousel = ({ items }) => {
+  console.log(items);
   const minImage = items.length > 1;
   const [activeItem, setActiveItem] = useState(0);
 
@@ -34,7 +35,7 @@ const Carousel = ({ items }) => {
 
   return (
     <div className="flex justify-center mb-4">
-      <div id="animation-carousel" className="relative w-full lg:w-full h-56 md:h-96 lg:h-[500px]" data-carousel="static">
+      <div id="animation-carousel" className="relative w-56 md:w-96 h-56 md:h-96" data-carousel="static">
 
         {items && <>
           <div className="relative overflow-hidden rounded-lg h-full">

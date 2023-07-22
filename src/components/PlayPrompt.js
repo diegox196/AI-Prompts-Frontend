@@ -23,11 +23,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
   const [isShowJSON, setIsShowJSON] = useState(false);
 
   const imageArray = [
-    { url: "https://flowbite.com/docs/images/carousel/carousel-1.svg" },
-    { url: "https://flowbite.com/docs/images/carousel/carousel-2.svg" },
-    { url: "https://flowbite.com/docs/images/carousel/carousel-3.svg" },
-    { url: "https://flowbite.com/docs/images/carousel/carousel-4.svg" },
-    { url: "https://flowbite.com/docs/images/carousel/carousel-5.svg" },
+    { url: "carousel-1.svg" },
   ];
 
   const requestOpenAi = async () => {
@@ -179,7 +175,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
           {errorMessage !== '' && <Alert type={"Danger"} message={errorMessage} />}
 
 
-          {promptData.response !== "" && (
+          {formData.response !== "" && (
             promptData.type !== 'image' ? (
               <>
                 <div className="mb-3 bg-gray-300 dark:bg-gray-700 rounded-xl">

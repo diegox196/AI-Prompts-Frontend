@@ -64,8 +64,8 @@ const Prompts = ({ isAllPrompt, setIsAllPrompt }) => {
     setIsShowModal(false);
   };
 
-  const handleConfirm = () => {
-    deletePrompt(promptId);
+  const handleConfirm = async () => {
+    await deletePrompt(promptId);
     setIsShowModal(false);
   };
   // -- End Action Confirm Modal

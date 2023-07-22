@@ -10,7 +10,6 @@ import React from 'react';
  * @param {function} goAllData - Function to navigate back to all data view.
  */
 const TableHeaderInfo = ({ type, setTypeAction, goAllData }) => {
-
   /**
    * Handles the creation of a new item.
    * Sets the `goAllData` state to false and updates the `setTypeAction` state to "Add new".
