@@ -16,7 +16,7 @@ const TagsInput = ({ initValue, updateTags }) => {
    * @param {object} event - The keydown event object
    */
   const handleKeyDown = (e) => {
-    if (e.key !== "Enter") {
+    if (e.key !== "Enter" && e.code !== "Space") {
       return;
     }
 

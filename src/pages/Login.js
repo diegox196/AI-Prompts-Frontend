@@ -27,11 +27,11 @@ const Login = ({ handleLogin }) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/session`, formData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/sessions`, formData);
       handleLogin(response.data.tokenSession);
       sessionStorage.setItem("user", JSON.stringify(response.data.user));
     } catch (err) {
-      setError(err.response.data.error);
+      setError(err.response ? err.response.data.error : err.message);
     }
     setIsLoading(false);
   };

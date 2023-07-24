@@ -43,7 +43,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
   const updateResponsePrompt = async (newResponse) => {
     const body = { response: JSON.stringify(newResponse) };
     try {
-      const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/prompt/${formData._id}`, body, {
+      const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/prompts/${formData._id}`, body, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }

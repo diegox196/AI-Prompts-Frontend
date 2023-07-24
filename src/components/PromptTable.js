@@ -19,7 +19,7 @@ const PromptTable = ({ handleClick }) => {
   useEffect(() => {
     const getPromptsByUserID = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompt/user/${user.user_id}`, {
+        const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompts/user/${user.user_id}`, {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("auth")}`
           }

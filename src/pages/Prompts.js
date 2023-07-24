@@ -31,7 +31,7 @@ const Prompts = ({ isAllPrompt, setIsAllPrompt }) => {
    */
   const deletePrompt = async (id) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URI}/api/prompt/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URI}/api/prompts/${id}`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }

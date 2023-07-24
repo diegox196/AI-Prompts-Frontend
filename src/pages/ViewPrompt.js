@@ -17,7 +17,7 @@ const ViewPrompt = ({ promptId, goAllPrompts }) => {
     const getPromptData = async () => {
       if (promptId) {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompt/${promptId}`, {
+          const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompts/${promptId}`, {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("auth")}`
             }

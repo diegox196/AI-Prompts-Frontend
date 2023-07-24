@@ -24,9 +24,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
   const modelCompletion = [
     "babbage",
     "text-davinci-003",
-    "davinci",
     "text-davinci-001",
-    "ada",
     "text-curie-001",
     "text-ada-001"
   ]
@@ -85,11 +83,12 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
       if (name.startsWith("body.")) {
         // For the nested fields under 'body', update the state accordingly
         const fieldName = name.split(".")[1];
+        let newValue = (fieldName === 'temperature' || fieldName === 'n') ? parseFloat(value) : value;
         setFormData((prevData) => ({
           ...prevData,
           body: {
             ...prevData.body,
-            [fieldName]: value
+            [fieldName]: newValue
           }
         }));
       } else {
@@ -238,8 +237,8 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                   type="range"
                   name="body.temperature"
-                  min="0"
-                  max="2"
+                  min={0.1}
+                  max={2}
                   step={0.1}
                   value={formData.body.temperature || 1}
                   onChange={handleChange} />
@@ -286,7 +285,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
                     id="n_image"
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     min={1}
-                    max={10}
+                    max={5}
                     step={1}
                     required=""
                     value={formData.body.n || 1}

@@ -52,7 +52,7 @@ const Users = ({ isAllUser, setIsAllUser }) => {
  */
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URI}/api/user/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URI}/api/users/${id}`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
@@ -62,8 +62,8 @@ const Users = ({ isAllUser, setIsAllUser }) => {
     }
   }
 
-  const handleConfirm = () => {
-    deleteUser(userId);
+  const handleConfirm = async () => {
+    await deleteUser(userId);
     setIsShowModal(false);
   };
   // -- End Action Confirm Modal

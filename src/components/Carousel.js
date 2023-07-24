@@ -6,7 +6,6 @@ import React, { useState } from 'react';
  * @param {Array} items - An array of objects representing the images to display in the carousel. Each object should have a "url" property specifying the image URL.
  */
 const Carousel = ({ items }) => {
-  console.log(items);
   const minImage = items.length > 1;
   const [activeItem, setActiveItem] = useState(0);
 

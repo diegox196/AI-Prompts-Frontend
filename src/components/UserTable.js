@@ -23,7 +23,7 @@ const UserTable = ({ handleClick }) => {
    */
   const getUsersData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/user`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/users`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
