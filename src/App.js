@@ -7,8 +7,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Dashboard from './pages/Dashboard';
 
+/**
+ * Main component that handles user authentication and routing.
+ * @returns {JSX.Element} The main application component.
+ */
 function App() {
-
+  // State to manage user authentication status
   const [isLogged, setIsLogged] = useState(sessionStorage.getItem("auth") || false);
 
   /**
@@ -35,8 +39,8 @@ function App() {
   const isAdmin = role === "admin";
   const mainRoute = isAdmin ? "user" : "prompt"
 
+  // Define the router configuration based on user authentication and role
   const router = createBrowserRouter([
-
     isLogged
       ? {
         path: "/",

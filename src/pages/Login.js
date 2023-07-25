@@ -6,8 +6,9 @@ import LoadingButton from '../components/LoadingButton';
 
 /**
  * Login screen displays a login form for users to sign in to their account.
- * 
- * @param {Object} handleLogin - Function to handle the login process
+ *
+ * @param {Object} handleLogin - Function to handle the login process.
+ * @returns {JSX.Element} The login screen component.
  */
 const Login = ({ handleLogin }) => {
 
@@ -23,6 +24,11 @@ const Login = ({ handleLogin }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  /**
+  * Function to handle the form submission.
+  * It makes an API call to sign in the user.
+  * @param {Object} e - The event object.
+  */
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

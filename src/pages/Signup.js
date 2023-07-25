@@ -5,9 +5,10 @@ import Alert from '../components/Alert';
 
 /**
  * Signup page for user registration
+ * @returns {JSX.Element} The signup page component.
  */
 const Signup = () => {
-
+  // State to manage form data, confirm password, error message, and saved user state
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -21,6 +22,10 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSavedUser, setIsSavedUser] = useState(false);
 
+  /**
+   * Function to handle form input changes.
+   * @param {Object} event - The event object.
+   */
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -44,6 +49,10 @@ const Signup = () => {
     }
   };
 
+  /**
+   * Function to handle form submission.
+   * @param {Object} event - The event object.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
 
