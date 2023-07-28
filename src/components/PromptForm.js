@@ -27,6 +27,10 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
     "text-davinci-001",
     "text-curie-001",
     "text-ada-001"
+  ];
+
+  const immageSize = [
+    "256x256", "512x512", "1024x1024"
   ]
 
   useEffect(() => {
@@ -275,7 +279,7 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
                     onChange={handleChange}>
                   </textarea>
                 </div>
-                <div className='sm:col-span-2'>
+                <div>
                   <label htmlFor="n_image" className="flex flex-row items-center justify-between mb-4 text-sm font-medium text-gray-900 dark:text-white">Number of images
                     <p className="text-sm font-medium text-gray-900 dark:text-white">{formData.body.n || 1}</p>
                   </label>
@@ -290,6 +294,20 @@ const PromptForm = ({ formType, promptData, handleSave, goAllPrompts }) => {
                     required=""
                     value={formData.body.n || 1}
                     onChange={handleChange} />
+                </div>
+                <div>
+                  <label htmlFor="size" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size</label>
+                  <select id="size"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    name="body.size"
+                    value={formData.body.size}
+                    onChange={handleChange}
+                  >
+                    {immageSize.map((model) => (
+                      <option key={model} value={model}>{model}</option>
+                    ))
+                    }
+                  </select>
                 </div>
               </>
             }
