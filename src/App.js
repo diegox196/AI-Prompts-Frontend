@@ -6,6 +6,9 @@ import { useState } from 'react';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Dashboard from './pages/Dashboard';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import TwoFactorAuthentication from './pages/TwoFactorAuthentication';
 
 /**
  * Main component that handles user authentication and routing.
@@ -41,31 +44,33 @@ function App() {
 
   // Define the router configuration based on user authentication and role
   const router = createBrowserRouter([
-    isLogged
-      ? {
-        path: "/",
-        element: <Dashboard handleLogout={handleLogout} typeView={mainRoute} />,
-        errorElement: <Error />
-      }
-      : {
-        path: "/",
-        element: <Login handleLogin={handleLogin} />,
-        errorElement: <Error />,
-      },
+    {
+      path: "/dashboard",
+      element: <Dashboard handleLogout={handleLogout} typeView={mainRoute} />,
+      errorElement: <Error />
+    },
+    {
+      path: "/",
+      element: <Login handleLogin={handleLogin} />,
+      errorElement: <Error />,
+    },
     {
       path: "/signup",
-      element: <Signup />
+      element: <Signup />,
     },
-
-    isAdmin
-      ? {
-        path: "/user",
-        element: <Dashboard handleLogout={handleLogout} typeView={"user"} />
-      }
-      : {
-        path: "/prompt",
-        element: <Dashboard handleLogout={handleLogout} typeView={"prompt"} />
-      }
+    {
+      path: "/forgot-password",
+      element: <ForgotPassword />,
+    },
+    {
+      path: "/reset-password",
+      element: <ResetPassword />,
+    },
+    {
+      path: "/verify-2fa",
+      element: <TwoFactorAuthentication />,
+      errorElement: <Error />,
+    },
   ]);
 
   return (

@@ -7,8 +7,16 @@ import React from 'react';
  * @param {string} btnText - The text to display on the button.
  * @param {string} typeIcon - The type of icon to display next to the button text. Currently supports 'Run'.
  * @param {boolean} fullWidth - Indicates whether the button should occupy the full width of its container.
+ * @param {string} buttonStyle - The style to apply on the button. (Optional)
+ * @param {boolean} buttonDisabled - Indicates if the button is active
  */
-const LoadingButton = ({ isLoading, btnText, typeIcon, fullWidth }) => {
+const LoadingButton = ({ isLoading, btnText, typeIcon, fullWidth, buttonStyle, buttonDisabled }) => {
+
+  const style = (buttonStyle !== undefined)
+    ? buttonStyle
+    : 'text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800';
+  const width = (fullWidth !== undefined) ? fullWidth : false;
+  const disabled = (buttonDisabled !== undefined) ? buttonDisabled : false;
 
   let icon;
 
@@ -25,7 +33,8 @@ const LoadingButton = ({ isLoading, btnText, typeIcon, fullWidth }) => {
   return (
     <button
       type="submit"
-      className={`${fullWidth ? 'flex w-full justify-center text-center' : ''} text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+      className={`${width ? 'flex w-full justify-center text-center' : ''} ${style}`}
+      disabled={disabled}
     >
 
       {isLoading

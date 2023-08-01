@@ -11,8 +11,8 @@ import { Link } from 'react-router-dom';
  */
 const Sidebar = ({ isNavbarOpen, handleLogout, onHandleClick }) => {
 
-  const promptRoute = "/prompt";
-  const userRoute = "/user";
+  const promptRoute = "/dashboard";
+  const userRoute = "/dashboard";
 
 
   const role = JSON.parse(sessionStorage.getItem("user")).role;
