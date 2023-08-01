@@ -25,7 +25,6 @@ const TwoFactorAuthentication = () => {
 
 
   const sendCode = async (email, token) => {
-
     try {
       const body = {
         "email": email

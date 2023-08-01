@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import TwoFactorAuthentication from './pages/TwoFactorAuthentication';
+import VerifiedAccount from './pages/VerifiedAccount';
 
 /**
  * Main component that handles user authentication and routing.
@@ -69,6 +70,10 @@ function App() {
     {
       path: "/verify-2fa",
       element: <TwoFactorAuthentication />,
+      errorElement: <Error />,
+    }, {
+      path: "/verify-email",
+      element: <VerifiedAccount />,
       errorElement: <Error />,
     },
   ]);

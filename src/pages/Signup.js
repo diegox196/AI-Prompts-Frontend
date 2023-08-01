@@ -42,7 +42,7 @@ const Signup = () => {
    */
   const createNewUser = async (newData) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/users`, newData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/account/register`, newData);
       return response.data;
     } catch (error) {
       return error.response.data;
@@ -155,6 +155,9 @@ const Signup = () => {
                     onChange={handleChange}
                   />
                 </div>
+                <p className="block text-sm leading-6 text-gray-900 dark:text-gray-400 p-1">
+                  An email will be sent to this address to validate and activate the account.
+                </p>
               </div>
 
               <div className="sm:col-span-6">
