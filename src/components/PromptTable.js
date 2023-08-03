@@ -24,8 +24,11 @@ const PromptTable = ({ handleClick }) => {
             Authorization: `Bearer ${sessionStorage.getItem("auth")}`
           }
         });
-        setPromptData(response.data);
-        setIsEmpty(response.data.length === 0);
+
+        const dataLength = response.data.length;
+        const value = (dataLength === 0) ? null : response.data;
+        setPromptData(value);
+        setIsEmpty(dataLength === 0);
 
       } catch (error) {
         console.error('Error fetching prompt data:', error);
@@ -38,7 +41,7 @@ const PromptTable = ({ handleClick }) => {
 
   return (
     <>
-      {isEmpty && <EmptyState item={"users"} />}
+      {isEmpty && <EmptyState item={"prompts"} />}
       {promptData &&
         <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
           <div className="rounded-lg bg-white dark:bg-gray-800">

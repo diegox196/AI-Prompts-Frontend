@@ -17,6 +17,8 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
     "password": "",
     "first_name": "",
     "last_name": "",
+    "phone_number": "",
+    "two_factor_enabled": false,
     "active": false,
     "role": "user",
   };

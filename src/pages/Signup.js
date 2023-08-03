@@ -14,6 +14,7 @@ const Signup = () => {
     username: '',
     first_name: '',
     last_name: '',
+    phone_number: '',
     password: '',
     active: false,
     role: "user"
@@ -94,7 +95,7 @@ const Signup = () => {
                   id="username"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Username"
-                  required=""
+                  required
                   value={formData.username}
                   onChange={handleChange}
                 />
@@ -110,9 +111,8 @@ const Signup = () => {
                     type="text"
                     name="first_name"
                     id="first_name"
-                    autoComplete="first_name"
                     placeholder="First Name"
-                    required=""
+                    required
                     value={formData.first_name}
                     onChange={handleChange}
                   />
@@ -130,8 +130,7 @@ const Signup = () => {
                     name="last_name"
                     id="last_name"
                     placeholder="Last Name"
-                    required=""
-                    autoComplete="last_name"
+                    required
                     value={formData.last_name}
                     onChange={handleChange}
                   />
@@ -148,9 +147,8 @@ const Signup = () => {
                     id="email"
                     name="email"
                     placeholder="Email"
-                    required=""
+                    required
                     type="email"
-                    autoComplete="email"
                     value={formData.email}
                     onChange={handleChange}
                   />
@@ -159,6 +157,25 @@ const Signup = () => {
                   An email will be sent to this address to validate and activate the account.
                 </p>
               </div>
+
+              <div className="sm:col-span-6">
+                <label htmlFor="phone_number" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
+                  Phone number
+                </label>
+                <div className="mt-2">
+                  <input
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    id="phone_number"
+                    name="phone_number"
+                    placeholder="88998899"
+                    required
+                    type="phone"
+                    value={formData.phone_number}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
 
               <div className="sm:col-span-6">
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">
@@ -171,7 +188,7 @@ const Signup = () => {
                     name="password"
                     type="password"
                     placeholder="Password"
-                    required=""
+                    required
                     value={formData.password}
                     onChange={handleChange}
                   />
@@ -189,7 +206,7 @@ const Signup = () => {
                     name="repeat_password"
                     type="password"
                     placeholder="Confirm password"
-                    required=""
+                    required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />

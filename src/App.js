@@ -5,6 +5,8 @@ import Error from './pages/Error';
 import { useState } from 'react';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+
+import AccountSettings from './pages/AccountSettings';
 import Dashboard from './pages/Dashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
@@ -46,14 +48,19 @@ function App() {
   // Define the router configuration based on user authentication and role
   const router = createBrowserRouter([
     {
+      path: "/",
+      element: <Login handleLogin={handleLogin} />,
+      errorElement: <Error />,
+    },
+    {
       path: "/dashboard",
       element: <Dashboard handleLogout={handleLogout} typeView={mainRoute} />,
       errorElement: <Error />
     },
     {
-      path: "/",
-      element: <Login handleLogin={handleLogin} />,
-      errorElement: <Error />,
+      path: "/account",
+      element: <AccountSettings handleLogout={handleLogout} />,
+      errorElement: <Error />
     },
     {
       path: "/signup",
@@ -71,7 +78,8 @@ function App() {
       path: "/verify-2fa",
       element: <TwoFactorAuthentication />,
       errorElement: <Error />,
-    }, {
+    },
+    {
       path: "/verify-email",
       element: <VerifiedAccount />,
       errorElement: <Error />,

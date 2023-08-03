@@ -56,8 +56,8 @@ const Login = ({ handleLogin }) => {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto"
-          src="https://flowbite.com/docs/images/logo.svg"
-          alt="Your Company"
+          src="/logo.svg"
+          alt="AI Prompt"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
           Sign in to your account

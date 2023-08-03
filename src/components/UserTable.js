@@ -28,8 +28,12 @@ const UserTable = ({ handleClick }) => {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
       });
-      setUserData(response.data);
-      setIsEmpty(response.data.length === 0);
+
+      const dataLength = response.data.length;
+      const value = (dataLength === 0) ? null : response.data;
+      setUserData(value);
+      setIsEmpty(dataLength === 0);
+      
     } catch (error) {
       console.error('Error fetching user data:', error);
       setIsEmpty(true);

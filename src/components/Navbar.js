@@ -42,7 +42,7 @@ const Navbar = ({ handleNavbarToggle }) => {
             </button>
             <Link to={routeIcon} className="flex ml-2 md:mr-24">
               <img
-                src="https://flowbite.com/docs/images/logo.svg"
+                src="/logo.svg"
                 className="h-8 mr-3"
                 alt="FlowBite Logo"
               />
@@ -56,11 +56,13 @@ const Navbar = ({ handleNavbarToggle }) => {
               <div className="hidden sm:block dark:text-white">
                 <span className="mr-2">{user.name}</span>
               </div>
-              <img
-                className="w-8 h-8 rounded-full"
-                src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
-                alt="user profile"
-              />
+              <svg className="h-8 w-8 p-1 rounded-full bg-gray-300 dark:bg-gray-500 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 14 18">
+                <path d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
+              </svg>
             </div>
           </div>
         </div>

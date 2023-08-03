@@ -26,8 +26,8 @@ const ForgotPassword = () => {
         <div className="flex items-center mb-6">
           <img
             className="mx-auto h-10 w-auto"
-            src="https://flowbite.com/docs/images/logo.svg"
-            alt="Your Company"
+            src="/logo.svg"
+            alt="AI Prompt"
           />
         </div>
 

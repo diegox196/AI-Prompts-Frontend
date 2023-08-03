@@ -65,7 +65,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
   }
 
   return (
-    <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
+    <section className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
       <div className="p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
         <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -84,7 +84,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
                 id="username"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Username"
-                required=""
+                required
                 value={formData.username}
                 onChange={handleChange}
                 disabled={isViewMode}
@@ -99,7 +99,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Email"
-                required=""
+                required
                 value={formData.email}
                 onChange={handleChange}
                 disabled={isViewMode}
@@ -116,7 +116,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
                     id="password"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Password"
-                    required=""
+                    required
                     value={formData.password}
                     onChange={handleChange}
                     disabled={isViewMode}
@@ -131,7 +131,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
                     id="re-password"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Confirm password"
-                    required=""
+                    required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     disabled={isViewMode}
@@ -148,7 +148,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
                 id="first_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="First name"
-                required=""
+                required
                 value={formData.first_name}
                 onChange={handleChange}
                 disabled={isViewMode}
@@ -163,11 +163,41 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
                 id="last_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Last name"
-                required=""
+                required
                 value={formData.last_name}
                 onChange={handleChange}
                 disabled={isViewMode}
               />
+            </div>
+
+            <div>
+              <label htmlFor="phone_number" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+              <input
+                type="phone"
+                name="phone_number"
+                id="phone_number"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="88558855"
+                required
+                value={formData.phone_number}
+                onChange={handleChange}
+                disabled={isViewMode}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="two_factor_enabled" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Two Factor Authtentication</label>
+              <select
+                id="two_factor_enabled"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                name="two_factor_enabled"
+                value={formData.two_factor_enabled}
+                onChange={handleChange}
+                disabled={isViewMode}
+              >
+                <option value={false}>Disabled</option>
+                <option value={true}>Enabled</option>
+              </select>
             </div>
 
             <div>
@@ -218,7 +248,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 
