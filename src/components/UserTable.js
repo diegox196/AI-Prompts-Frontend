@@ -48,7 +48,7 @@ const UserTable = ({ handleClick }) => {
           <div className="overflow-x-auto shadow-md rounded-lg">
             <table className="w-full bg-white dark:bg-gray-800 dark:text-white">
               <thead>
-                <tr className="bg-gray-50 dark:bg-gray-700 dark:text-gray-100">
+                <tr className="bg-gray-100 dark:bg-gray-700 dark:text-gray-100">
                   <th className="py-2 px-4">Name</th>
                   <th className="py-2 px-4">Email</th>
                   <th className="py-2 px-4">Status</th>

@@ -49,7 +49,7 @@ const PromptTable = ({ handleClick }) => {
             <div className="overflow-x-auto shadow-md">
               <table className="w-full  dark:text-white">
                 <thead>
-                  <tr className="bg-gray-50 dark:bg-gray-700 dark:text-gray-100">
+                  <tr className="bg-gray-100 dark:bg-gray-700 dark:text-gray-100">
                     <th className="py-2 px-4">Name</th>
                     <th className="py-2 px-4">Type</th>
                     <th className="py-2 px-4">Tags</th>

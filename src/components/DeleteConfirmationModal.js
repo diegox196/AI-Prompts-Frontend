@@ -8,8 +8,8 @@ import React from 'react';
 
 const DeleteConfirmationModal = ({ handleClose, handleConfirm }) => {
   return (
-    <div id="deleteModal" tabIndex="-1" className="flex justify-center items-center z-50 md:inset-0 h-modal md:h-full w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
-      <div className="relative p-4 w-full max-w-md h-full md:h-auto">
+    <div id="deleteModal" tabIndex="-1" className="fixed inset-0 flex items-center justify-center z-50 md:inset-0 backdrop-blur-sm bg-gray-600/50 dark:bg-gray-900/50">
+      <div className="relative p-4 w-full max-w-md mx-auto">
 
         <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
           <button type="button"
