@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Alert from './Alert';
 import axios from 'axios';
 import LoadingButton from './LoadingButton';
+import Toast from './Toast';
 
 const AccountForms = () => {
 
@@ -26,6 +27,7 @@ const AccountForms = () => {
   const [userData, setUserData] = useState(initData);
   const [changePassword, setChangePassword] = useState(initPassword);
   const [name, setName] = useState("");
+  const [isSuccessful, setIsSuccessful] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [errorMessagePreferences, setErrorMessagePreferences] = useState("");
@@ -133,12 +135,11 @@ const AccountForms = () => {
     const isSaved = await updateDataUser(body);
     setIsLoading(false);
 
-    console.log(isSaved);
-
     if (isSaved.error) {
       setErrorMessage(isSaved.error);
     } else {
       setName(`${isSaved.first_name} ${isSaved.last_name}`);
+      showToastSaved();
     }
   };
 
@@ -152,10 +153,10 @@ const AccountForms = () => {
     const isSaved = await updateDataUser(body);
     setIsLoadingPreferences(false);
 
-    console.log(isSaved);
-
     if (isSaved.error) {
       setErrorMessagePreferences(isSaved.error);
+    } else {
+      showToastSaved();
     }
   };
 
@@ -177,11 +178,27 @@ const AccountForms = () => {
       setErrorMessagePassword(isSaved.error);
     } else {
       setChangePassword(initPassword);
+      showToastSaved();
     }
   };
 
+  const showToastSaved = () => {
+    setIsSuccessful(true);
+
+    // After 3 seconds, set setIsSaved to false
+    setTimeout(() => {
+      setIsSuccessful(false);
+    }, 3000);
+  }
+
+  const onCloseToast = () => {
+    setIsSuccessful(false);
+  }
+
+
   return (
     <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
+      {isSuccessful && <Toast message={"Account settings successfully updated"} onClose={onCloseToast} />}
       <div className="col-span-full mb-4">
         <h1 className="text-2xl font-semibold text-black dark:text-white">Account Settings</h1>
       </div>
