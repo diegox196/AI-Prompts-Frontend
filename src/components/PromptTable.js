@@ -16,26 +16,59 @@ const PromptTable = ({ handleClick }) => {
 
   const user = JSON.parse(sessionStorage.getItem("user"));
 
-  useEffect(() => {
-    const getPromptsByUserID = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompts/user/${user.user_id}`, {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+  const searchUserPromptsByName = async (body) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/graphql`, body);
+      const arrayPrompts = response.data.data.searchUserPromptsByName;
+      setPromptData(arrayPrompts);
+
+    } catch (error) {
+      console.error('Error fetching prompt data:', error);
+      setIsEmpty(true);
+    }
+  };
+
+  const searchUserPromptsByTag = async (body) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/graphql`, body);
+      const arrayPrompts = response.data.data.searchUserPromptsByTag;
+      setPromptData(arrayPrompts);
+
+    } catch (error) {
+      console.error('Error fetching prompt data:', error);
+      setIsEmpty(true);
+    }
+  };
+
+  const getPromptsByUserID = async () => {
+    try {
+      const body = {
+        query: `
+          {
+            getPromptsByUserId(user_id: "${user.user_id}"){
+              _id
+              type
+              name
+              tags
+            }
           }
-        });
-
-        const dataLength = response.data.length;
-        const value = (dataLength === 0) ? null : response.data;
-        setPromptData(value);
-        setIsEmpty(dataLength === 0);
-
-      } catch (error) {
-        console.error('Error fetching prompt data:', error);
-        setIsEmpty(true);
+        `,
       }
-    };
+      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/graphql`, body);
+      const arrayPrompts = response.data.data.getPromptsByUserId;
 
+      const dataLength = arrayPrompts.length;
+      const value = (dataLength === 0) ? null : arrayPrompts;
+      setPromptData(value);
+      setIsEmpty(dataLength === 0);
+
+    } catch (error) {
+      console.error('Error fetching prompt data:', error);
+      setIsEmpty(true);
+    }
+  };
+
+  useEffect(() => {
     getPromptsByUserID();
   }, []);
 
@@ -45,7 +78,13 @@ const PromptTable = ({ handleClick }) => {
       {promptData &&
         <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
           <div className="rounded-lg bg-white dark:bg-gray-800">
-            <HeaderWithFilter nResult={promptData.length} userId={user.user_id} />
+            <HeaderWithFilter
+              nResult={promptData.length}
+              userId={user.user_id}
+              getPromptsByUserID={getPromptsByUserID}
+              searchUserPromptsByName={searchUserPromptsByName}
+              searchUserPromptsByTag={searchUserPromptsByTag}
+            />
             <div className="overflow-x-auto shadow-md">
               <table className="w-full  dark:text-white">
                 <thead>
