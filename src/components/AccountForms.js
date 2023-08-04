@@ -320,7 +320,7 @@ const AccountForms = () => {
         </section>
 
         <section className="p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5 mb-4">
-          <h3 className="mb-4 text-xl font-bold text-black dark:text-white">Password information</h3>
+          <h3 className="mb-4 text-xl font-bold text-black dark:text-white">Change Password</h3>
           <form onSubmit={handleSubmitChangePassword}>
             {errorMessagePassword !== '' && <Alert type={"Danger"} message={errorMessagePassword} />}
             <div>

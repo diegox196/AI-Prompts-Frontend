@@ -45,7 +45,7 @@ const PromptTable = ({ handleClick }) => {
       {promptData &&
         <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
           <div className="rounded-lg bg-white dark:bg-gray-800">
-            <HeaderWithFilter nResult={promptData.length} />
+            <HeaderWithFilter nResult={promptData.length} userId={user.user_id} />
             <div className="overflow-x-auto shadow-md">
               <table className="w-full  dark:text-white">
                 <thead>

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FilterMenu from './FilterMenu';
+import axios from 'axios';
 
 /*<div className="w-full lg:w-2/3 md:w-1/2 ">
               <h2 className="text-black dark:text-gray-100 font-semibold text-lg lg:px-2">Results
@@ -13,10 +14,32 @@ import FilterMenu from './FilterMenu';
  *
  * @param {number} nResult - The number of results to display.
  */
-const HeaderWithFilter = ({ nResult }) => {
+const HeaderWithFilter = ({ userId }) => {
 
   const title = "Tags";
-  const options = ["hola", "mundo"];
+  const [options, setOptions] = useState();
+
+  useEffect(() => {
+    const getPromptsByUserID = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompts/user/${userId}/tags`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+          }
+        });
+
+        setOptions(response.data);
+      } catch (error) {
+        console.error('Error fetching prompt data:', error);
+      }
+    };
+
+    getPromptsByUserID();
+  }, []);
+
+  const onClick = (item) => {
+    console.log(item);
+  }
 
   return (
     <section className="flex items-center">
@@ -28,7 +51,7 @@ const HeaderWithFilter = ({ nResult }) => {
             <div className="w-full md:w-1/2 lg:w-1/3">
               <form className="flex items-center">
                 <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                
+
                 <div className="relative w-full">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -57,7 +80,7 @@ const HeaderWithFilter = ({ nResult }) => {
                 </svg>
                 Reset all
               </button>
-              <FilterMenu title={title} options={options} />
+              <FilterMenu title={title} options={options} onClick={onClick}/>
             </div>
 
           </div>
