@@ -39,6 +39,9 @@ const AccountForms = () => {
 
   const user = JSON.parse(sessionStorage.getItem('user'));
 
+  const initTheme = ('theme' in localStorage) ? localStorage.getItem('theme') : 'system';
+  const [theme, setTheme] = useState(initTheme);
+
 
 
   // Update the userData state when user data changes
@@ -143,6 +146,23 @@ const AccountForms = () => {
     }
   };
 
+  const changeTheme = () => {
+    const element = document.documentElement;
+    switch (theme) {
+      case 'dark':
+        element.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        break;
+      case 'light':
+        element.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        break;
+      default:
+        localStorage.removeItem('theme');
+        break;
+    };
+  };
+
   const handleSubmitPreferences = async (e) => {
     e.preventDefault();
     const body = {
@@ -158,6 +178,7 @@ const AccountForms = () => {
     } else {
       showToastSaved();
     }
+    changeTheme();
   };
 
   const handleSubmitChangePassword = async (e) => {
@@ -184,17 +205,15 @@ const AccountForms = () => {
 
   const showToastSaved = () => {
     setIsSuccessful(true);
-
     // After 3 seconds, set setIsSaved to false
     setTimeout(() => {
       setIsSuccessful(false);
     }, 3000);
-  }
+  };
 
   const onCloseToast = () => {
     setIsSuccessful(false);
-  }
-
+  };
 
   return (
     <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
@@ -316,18 +335,21 @@ const AccountForms = () => {
 
             <div className="flex items-center justify-between py-4 border-t-2 border-gray-300 dark:border-gray-500">
               <div className="flex flex-col grow px-2">
-                <p className="text-lg font-semibold text-black dark:text-white">Dark Mode</p>
+                <p className="text-lg font-semibold text-black dark:text-white">Theme</p>
                 <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  When you activate this option, the interface transforms into soothing dark tones, reducing exposure to intense light and protecting your eyes in low-light environments
+                  When this option is activated, the interface is transformed into dark, light tones or uses the theme of your system.
                 </p>
               </div>
-              <label htmlFor="dark_mode" className="relative inline-flex items-center mb-4 cursor-pointer">
-                <input type="checkbox"
-                  id="dark_mode"
-                  value=""
-                  className="sr-only peer" />
-                <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-              </label>
+              <select id="theme"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                name="theme"
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+              >
+                <option value="system">Same as system</option>
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+              </select>
             </div>
 
             <div className="flex space-x-4 mt-4">
