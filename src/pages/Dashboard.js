@@ -11,8 +11,9 @@ import Prompts from './Prompts';
  *
  * @param {function} handleLogout - Function to handle user logout.
  * @param {string} typeView - Type of view to display (user or prompt).
+ * @param {string} name - The user name.
  */
-const Dashboard = ({ handleLogout, typeView }) => {
+const Dashboard = ({ handleLogout, typeView, name }) => {
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State to control the open/closed state of the navbar
   const [isMainScreen, setIsMainScreen] = useState(true); //Allows to display the tables or the action screen (create or edit)
@@ -28,7 +29,7 @@ const Dashboard = ({ handleLogout, typeView }) => {
   return (
     <>
       <Sidebar isNavbarOpen={isNavbarOpen} handleLogout={handleLogout} onHandleClick={handleSideBar} />
-      <Navbar handleNavbarToggle={handleNavbarToggle} />
+      <Navbar handleNavbarToggle={handleNavbarToggle} name={name} />
       <div className="sm:ml-64 mt-14 pt-4">
         {
           typeView === "user"

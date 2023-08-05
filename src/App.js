@@ -18,16 +18,12 @@ import VerifiedAccount from './pages/VerifiedAccount';
  * @returns {JSX.Element} The main application component.
  */
 function App() {
-  // State to manage user authentication status
-  const [isLogged, setIsLogged] = useState(sessionStorage.getItem("auth") || false);
-
   /**
    * Function to handle the login process
    * 
    * @param {string} token - The authentication token
    */
   const handleLogin = (token) => {
-    setIsLogged(true);
     sessionStorage.setItem('auth', token);
   };
 
@@ -35,7 +31,6 @@ function App() {
    * Function to handle the logout process
    */
   const handleLogout = () => {
-    setIsLogged(false);
     sessionStorage.removeItem('auth');
   };
 
@@ -44,6 +39,8 @@ function App() {
   const role = user.role;
   const isAdmin = role === "admin";
   const mainRoute = isAdmin ? "user" : "prompt"
+  //const user = JSON.parse(sessionStorage.getItem("user"));
+  const [name, setName] = useState(user.name);
 
   // Define the router configuration based on user authentication and role
   const router = createBrowserRouter([
@@ -54,12 +51,12 @@ function App() {
     },
     {
       path: "/dashboard",
-      element: <Dashboard handleLogout={handleLogout} typeView={mainRoute} />,
+      element: <Dashboard handleLogout={handleLogout} typeView={mainRoute} name={name} />,
       errorElement: <Error />
     },
     {
       path: "/account",
-      element: <AccountSettings handleLogout={handleLogout} />,
+      element: <AccountSettings handleLogout={handleLogout} name={name} setName={setName} />,
       errorElement: <Error />
     },
     {

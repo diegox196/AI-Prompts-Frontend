@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
  * Renders the navigation bar with the logo, title, and user profile.
  *
  * @param {function} handleNavbarToggle - Function to handle toggling the navbar.
+ * @param {string} name - The user name.
  */
-const Navbar = ({ handleNavbarToggle }) => {
+const Navbar = ({ handleNavbarToggle, name }) => {
 
   const title = "AIPrompt";
   const routeIcon = "/dashboard";
-  const user = JSON.parse(sessionStorage.getItem("user"));
 
   return (
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -54,7 +54,7 @@ const Navbar = ({ handleNavbarToggle }) => {
           <div className="flex items-center">
             <div className="flex items-center ml-3">
               <div className="hidden sm:block dark:text-white">
-                <span className="mr-2">{user.name}</span>
+                <span className="mr-2">{name}</span>
               </div>
               <svg className="h-8 w-8 p-1 rounded-full bg-gray-300 dark:bg-gray-500 text-gray-800 dark:text-white"
                 aria-hidden="true"
