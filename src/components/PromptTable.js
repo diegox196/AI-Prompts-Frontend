@@ -18,7 +18,11 @@ const PromptTable = ({ handleClick }) => {
 
   const searchUserPromptsByName = async (body) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/graphql`, body);
+      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/api/prompts/graphql`, body, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
       const arrayPrompts = response.data.data.searchUserPromptsByName;
       setPromptData(arrayPrompts);
 
@@ -30,7 +34,11 @@ const PromptTable = ({ handleClick }) => {
 
   const searchUserPromptsByTag = async (body) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/graphql`, body);
+      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/api/prompts/graphql`, body, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
       const arrayPrompts = response.data.data.searchUserPromptsByTag;
       setPromptData(arrayPrompts);
 
@@ -54,7 +62,11 @@ const PromptTable = ({ handleClick }) => {
           }
         `,
       }
-      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/graphql`, body);
+      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/api/prompts/graphql`, body, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
       const arrayPrompts = response.data.data.getPromptsByUserId;
 
       const dataLength = arrayPrompts.length;
