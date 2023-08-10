@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
   const [token, setToken] = useState(null);
-  const [email, setEmail] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
@@ -13,24 +12,20 @@ const ResetPassword = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const emailFromParams = urlParams.get('email');
     const tokenFromParams = urlParams.get('auth_token');
 
-    if (emailFromParams && tokenFromParams) {
-      setEmail(emailFromParams);
+    if (tokenFromParams) {
       setToken(tokenFromParams);
-    }
+    };
   }, []);
 
   const changePassword = async () => {
     try {
       const body = {
-        "email": email,
-        "password": password,
-        "auth_token": token
+        "password": password
       };
 
-      const codeData = await axios.post(`${process.env.REACT_APP_API_URI}/api/account/verify-reset-password`, body);
+      const codeData = await axios.patch(`${process.env.REACT_APP_API_URI}/api/accounts/${token}/reset-password`, body);
       if(codeData.status){
         navigate("/");
       }

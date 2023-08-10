@@ -72,7 +72,7 @@ const HeaderWithFilter = ({ userId, getPromptsByUserID, searchUserPromptsByName,
           }
         }
       `,
-    }
+    };
     searchUserPromptsByName(body);
 
   }

@@ -5,12 +5,9 @@ import { useNavigate } from 'react-router-dom';
 const VerifiedAccount = () => {
   const navigate = useNavigate();
 
-  const activateAccount = async (token) => {
+  const activateAccount = async (auth_token) => {
     try {
-      const body = {
-        "auth_token": token
-      };
-      const codeData = await axios.post(`${process.env.REACT_APP_API_URI}/api/account/verify-email`, body);
+      const codeData = await axios.patch(`${process.env.REACT_APP_API_URI}/api/accounts/${auth_token}/verify-email`);
       console.log(codeData.data);
     } catch (error) {
       navigate("/error");

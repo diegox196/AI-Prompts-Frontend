@@ -43,7 +43,7 @@ const Signup = () => {
    */
   const createNewUser = async (newData) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/account/register`, newData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/accounts/register`, newData);
       return response.data;
     } catch (error) {
       return error.response.data;
