@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EmptyState from './EmptyState';
+import SkeletonTable from './SkeletonTable';
 
 /**
  * UserTable component.
@@ -33,7 +34,7 @@ const UserTable = ({ handleClick }) => {
       const value = (dataLength === 0) ? null : response.data;
       setUserData(value);
       setIsEmpty(dataLength === 0);
-      
+
     } catch (error) {
       console.error('Error fetching user data:', error);
       setIsEmpty(true);
@@ -42,6 +43,7 @@ const UserTable = ({ handleClick }) => {
 
   return (
     <>
+      {(!isEmpty && !userData) && <SkeletonTable numRows={4} showFilters={false} />}
       {isEmpty && <EmptyState item={"users"} />}
       {userData &&
         <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">

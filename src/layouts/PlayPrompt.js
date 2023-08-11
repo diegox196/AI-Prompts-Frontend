@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Alert from './Alert';
-import LoadingButton from './LoadingButton';
+import Alert from '../components/Alert';
+import LoadingButton from '../components/LoadingButton';
 import axios from 'axios';
 
-import Carousel from './Carousel';
+import Carousel from '../components/Carousel';
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/hljs';

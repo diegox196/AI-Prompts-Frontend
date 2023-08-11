@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Toast from './Toast';
-import UserProfileSection from './AccountForm/UserProfileSection';
-import GeneralInformationSection from './AccountForm/GeneralInformationSection';
-import PreferenceSection from './AccountForm/PreferenceSection';
-import ChangePasswordSection from './AccountForm/ChangePasswordSection';
+import Toast from '../components/Toast';
+import UserProfileSection from '../components/AccountForm/UserProfileSection';
+import GeneralInformationSection from '../components/AccountForm/GeneralInformationSection';
+import PreferenceSection from '../components/AccountForm/PreferenceSection';
+import ChangePasswordSection from '../components/AccountForm/ChangePasswordSection';
 
-const AccountForms = ({ name, setName }) => {
+const AccountForms = ({ name, updateName }) => {
 
   const initData = {
     email: "",
@@ -36,7 +36,6 @@ const AccountForms = ({ name, setName }) => {
         });
         const newData = response.data;
         setUserData(newData);
-        setName(`${newData.first_name} ${newData.last_name}`);
       } catch (error) {
         console.log(error);
         console.error('Error al obtener los datos del usuario:', error);
@@ -108,7 +107,7 @@ const AccountForms = ({ name, setName }) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-4">
         <UserProfileSection name={name} email={userData.email} />
         <GeneralInformationSection userData={userData} handleChange={handleChange}
-          updateDataUser={updateDataUser} showToastSaved={showToastSaved} setName={setName} />
+          updateDataUser={updateDataUser} showToastSaved={showToastSaved} updateName={updateName} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4">

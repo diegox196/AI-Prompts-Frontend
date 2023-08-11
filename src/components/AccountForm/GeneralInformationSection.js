@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LoadingButton from '../LoadingButton';
 import Alert from '../Alert';
 
-const GeneralInformationSection = ({ userData, handleChange, updateDataUser, showToastSaved, setName }) => {
+const GeneralInformationSection = ({ userData, handleChange, updateDataUser, showToastSaved, updateName }) => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +23,7 @@ const GeneralInformationSection = ({ userData, handleChange, updateDataUser, sho
     if (isSaved.error) {
       setErrorMessage(isSaved.error);
     } else {
-      setName(`${isSaved.first_name} ${isSaved.last_name}`);
+      updateName(`${isSaved.first_name} ${isSaved.last_name}`);
       showToastSaved();
     }
   };

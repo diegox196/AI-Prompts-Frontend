@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EmptyState from './EmptyState';
 import HeaderWithFilter from './HeaderWithFilter';
+import SkeletonTable from './SkeletonTable';
 
 /**
  * PromptTable component.
@@ -86,6 +87,7 @@ const PromptTable = ({ handleClick }) => {
 
   return (
     <>
+      {(!isEmpty && !promptData) && <SkeletonTable numRows={4} showFilters={true}/>}
       {isEmpty && <EmptyState item={"prompts"} />}
       {promptData &&
         <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
@@ -98,7 +100,7 @@ const PromptTable = ({ handleClick }) => {
               searchUserPromptsByTag={searchUserPromptsByTag}
             />
             <div className="overflow-x-auto shadow-md">
-              <table className="w-full  dark:text-white">
+              <table className="w-full dark:text-white">
                 <thead>
                   <tr className="bg-gray-100 dark:bg-gray-700 dark:text-gray-100">
                     <th className="py-2 px-4">Name</th>

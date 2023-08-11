@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
-import Users from './Users';
-import Prompts from './Prompts';
+import Users from '../layouts/Users';
+import Prompts from '../layouts/Prompts';
 
 /**
  * Dashboard page.
@@ -13,7 +13,13 @@ import Prompts from './Prompts';
  * @param {string} typeView - Type of view to display (user or prompt).
  * @param {string} name - The user name.
  */
-const Dashboard = ({ handleLogout, typeView, name }) => {
+const Dashboard = ({ handleLogout }) => {
+
+  const userJSON = sessionStorage.getItem("user");
+  const user = userJSON ? JSON.parse(userJSON) : { role: "user" };
+  const role = user.role;
+  const isAdmin = role === "admin";
+  const typeView = isAdmin ? "user" : "prompt"
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State to control the open/closed state of the navbar
   const [isMainScreen, setIsMainScreen] = useState(true); //Allows to display the tables or the action screen (create or edit)
@@ -29,7 +35,7 @@ const Dashboard = ({ handleLogout, typeView, name }) => {
   return (
     <>
       <Sidebar isNavbarOpen={isNavbarOpen} handleLogout={handleLogout} onHandleClick={handleSideBar} />
-      <Navbar handleNavbarToggle={handleNavbarToggle} name={name} />
+      <Navbar handleNavbarToggle={handleNavbarToggle} name={user.name} />
       <div className="sm:ml-64 mt-14 pt-4">
         {
           typeView === "user"

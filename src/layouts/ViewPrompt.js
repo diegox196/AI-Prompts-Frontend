@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import PlayPrompt from '../components/PlayPrompt';
+import PlayPrompt from './PlayPrompt';
 
 /**
  * ViewPrompt component.

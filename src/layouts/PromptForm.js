@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Alert from './Alert';
-import TagsInput from './TagsInput';
+import Alert from '../components/Alert';
+import TagsInput from '../components/TagsInput';
 
 /**
  * PromptForm component displays a form for creating or editing a prompt.

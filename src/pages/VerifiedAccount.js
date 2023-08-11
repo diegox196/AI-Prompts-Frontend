@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const VerifiedAccount = () => {
@@ -11,7 +11,7 @@ const VerifiedAccount = () => {
       console.log(codeData.data);
     } catch (error) {
       navigate("/error");
-    }
+    };
   };
 
   useEffect(() => {

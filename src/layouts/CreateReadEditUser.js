@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import UserForm from '../components/UserForm';
+import UserForm from './UserForm';
 import axios from 'axios';
 
 /**

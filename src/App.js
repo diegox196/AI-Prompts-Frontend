@@ -2,7 +2,6 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Error from './pages/Error';
 
-import { useState } from 'react';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
@@ -34,14 +33,6 @@ function App() {
     sessionStorage.removeItem('auth');
   };
 
-  const userJSON = sessionStorage.getItem("user");
-  const user = userJSON ? JSON.parse(userJSON) : { role: "user" };
-  const role = user.role;
-  const isAdmin = role === "admin";
-  const mainRoute = isAdmin ? "user" : "prompt"
-  //const user = JSON.parse(sessionStorage.getItem("user"));
-  const [name, setName] = useState(user.name);
-
   // Define the router configuration based on user authentication and role
   const router = createBrowserRouter([
     {
@@ -51,12 +42,12 @@ function App() {
     },
     {
       path: "/dashboard",
-      element: <Dashboard handleLogout={handleLogout} typeView={mainRoute} name={name} />,
+      element: <Dashboard handleLogout={handleLogout} />,
       errorElement: <Error />
     },
     {
       path: "/account",
-      element: <AccountSettings handleLogout={handleLogout} name={name} setName={setName} />,
+      element: <AccountSettings handleLogout={handleLogout} />,
       errorElement: <Error />
     },
     {

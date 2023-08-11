@@ -2,12 +2,6 @@ import React, { useEffect, useState } from 'react';
 import FilterMenu from './FilterMenu';
 import axios from 'axios';
 
-/*<div className="w-full lg:w-2/3 md:w-1/2 ">
-              <h2 className="text-black dark:text-gray-100 font-semibold text-lg lg:px-2">Results
-                <span className="text-gray-500">{" (" + nResult + ")"}</span>
-              </h2>
-            </div>*/
-
 /**
  * HeaderWithFilter component.
  * Renders the header section with search and filter options, along with the result count.

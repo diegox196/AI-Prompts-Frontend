@@ -9,7 +9,7 @@ import React from 'react';
 const EmptyState = ({ item }) => {
   return (
     <section className="h-full w-full px-4 py-4 mx-auto lg:px-12">
-      <div className="flex flex-col items-center justify-center mt-8 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8">
+      <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8">
         <svg xmlns="http://www.w3.org/2000/svg" className="w-16 h-16 text-gray-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="12" r="10"></circle>
           <path d="M12 8v4M12 16h.01"></path>
