@@ -3,6 +3,7 @@ import axios from 'axios';
 import EmptyState from './EmptyState';
 import HeaderWithFilter from './HeaderWithFilter';
 import SkeletonTable from './SkeletonTable';
+import ProgressBar from './ProgressBar';
 
 /**
  * PromptTable component.
@@ -13,12 +14,14 @@ import SkeletonTable from './SkeletonTable';
 const PromptTable = ({ handleClick }) => {
 
   const [promptData, setPromptData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
 
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   const searchUserPromptsByName = async (body) => {
     try {
+      setIsLoading(true);
       const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/api/prompts/graphql`, body, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
@@ -26,6 +29,7 @@ const PromptTable = ({ handleClick }) => {
       });
       const arrayPrompts = response.data.data.searchUserPromptsByName;
       setPromptData(arrayPrompts);
+      setIsLoading(false);
 
     } catch (error) {
       console.error('Error fetching prompt data:', error);
@@ -35,6 +39,7 @@ const PromptTable = ({ handleClick }) => {
 
   const searchUserPromptsByTag = async (body) => {
     try {
+      setIsLoading(true);
       const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/api/prompts/graphql`, body, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
@@ -42,6 +47,7 @@ const PromptTable = ({ handleClick }) => {
       });
       const arrayPrompts = response.data.data.searchUserPromptsByTag;
       setPromptData(arrayPrompts);
+      setIsLoading(false);
 
     } catch (error) {
       console.error('Error fetching prompt data:', error);
@@ -51,6 +57,7 @@ const PromptTable = ({ handleClick }) => {
 
   const getPromptsByUserID = async () => {
     try {
+      setIsLoading(true);
       const body = {
         query: `
           {
@@ -74,6 +81,7 @@ const PromptTable = ({ handleClick }) => {
       const value = (dataLength === 0) ? null : arrayPrompts;
       setPromptData(value);
       setIsEmpty(dataLength === 0);
+      setIsLoading(false);
 
     } catch (error) {
       console.error('Error fetching prompt data:', error);
@@ -87,7 +95,7 @@ const PromptTable = ({ handleClick }) => {
 
   return (
     <>
-      {(!isEmpty && !promptData) && <SkeletonTable numRows={4} showFilters={true}/>}
+      {(!isEmpty && !promptData) && <SkeletonTable numRows={4} showFilters={true} />}
       {isEmpty && <EmptyState item={"prompts"} />}
       {promptData &&
         <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
@@ -99,14 +107,18 @@ const PromptTable = ({ handleClick }) => {
               searchUserPromptsByName={searchUserPromptsByName}
               searchUserPromptsByTag={searchUserPromptsByTag}
             />
+
+
+            <ProgressBar isLoading={isLoading} />
+
             <div className="overflow-x-auto shadow-md">
               <table className="w-full dark:text-white">
                 <thead>
                   <tr className="bg-gray-100 dark:bg-gray-700 dark:text-gray-100">
-                    <th className="py-2 px-4">Name</th>
-                    <th className="py-2 px-4">Type</th>
-                    <th className="py-2 px-4">Tags</th>
-                    <th className="py-2 px-4">Actions</th>
+                    <th className="pb-2 px-4">Name</th>
+                    <th className="pb-2 px-4">Type</th>
+                    <th className="pb-2 px-4">Tags</th>
+                    <th className="pb-2 px-4">Actions</th>
                   </tr>
                 </thead>
                 <tbody  >

@@ -140,25 +140,41 @@
   }
 
   /* total width */
-*::-webkit-scrollbar {
-  background-color: #1f2937;
-  width: 8px;
-  height: 8px;
+  *::-webkit-scrollbar {
+    background-color: #1f2937;
+    width: 8px;
+    height: 8px;
+  }
+
+  /* background of the scrollbar except button or resizer */
+  *::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  /* scrollbar itself */
+  *::-webkit-scrollbar-thumb {
+    background-color: #464646;
+    border-radius: 16px;
+  }
+
+  /* set button(top and bottom of the scrollbar) */
+  *::-webkit-scrollbar-button {
+    display: none;
+  }
 }
 
-/* background of the scrollbar except button or resizer */
-*::-webkit-scrollbar-track {
-  background-color: transparent;
+.animate-indeterminate {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: indeterminate;
 }
 
-/* scrollbar itself */
-*::-webkit-scrollbar-thumb {
-  background-color: #464646;
-  border-radius: 16px;
-}
+@keyframes indeterminate {
+  from {
+    left: -50%;
+  }
 
-/* set button(top and bottom of the scrollbar) */
-*::-webkit-scrollbar-button {
-  display: none;
-}
+  to {
+    left: 100%;
+  }
 }
