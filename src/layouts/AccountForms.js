@@ -37,8 +37,7 @@ const AccountForms = ({ name, updateName }) => {
         const newData = response.data;
         setUserData(newData);
       } catch (error) {
-        console.log(error);
-        console.error('Error al obtener los datos del usuario:', error);
+        console.error(error);
       }
     };
 

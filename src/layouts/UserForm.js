@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Alert from '../components/Alert';
+import LoadingButton from '../components/LoadingButton'
 
 /**
  * UserForm component.
@@ -14,6 +15,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
 
   const [formData, setFormData] = useState(userData);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   //Control which components to show
@@ -52,7 +54,9 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
       }
     }
 
+    setIsLoading(true);
     const isSaved = await handleSave(formData);
+    setIsLoading(false);
     if (isSaved.error) {
       setErrorMessage(isSaved.error);
     } else {
@@ -232,12 +236,7 @@ const UserForm = ({ type, userData, handleSave, goAllUsers }) => {
           </div>
           <div className="flex space-x-4">
             {!isViewMode &&
-              <button
-                type="submit"
-                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Save
-              </button>
+              <LoadingButton isLoading={isLoading} btnText={"Save"} loadingText={"Saving..."} />
             }
             <button
               type="button"

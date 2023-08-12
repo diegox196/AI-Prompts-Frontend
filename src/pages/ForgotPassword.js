@@ -13,7 +13,7 @@ const ForgotPassword = () => {
       const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/accounts/forgot-password`, { email: email });
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsSending(true);
     }

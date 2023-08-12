@@ -35,7 +35,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
       });
       return openData.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return null;
     }
   }
@@ -120,7 +120,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
         return images.data;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return imageArray;
     }
   }
@@ -163,7 +163,7 @@ const PlayPrompt = ({ promptData, goAllPrompts }) => {
         <form onSubmit={handleSubmit}>
 
           <div className="flex space-x-4 pb-6">
-            <LoadingButton isLoading={isLoading} btnText={"Run"} typeIcon={"Run"} />
+            <LoadingButton isLoading={isLoading} btnText={"Run"} loadingText={"Running..."} typeIcon={"Run"} />
             <button
               type="button"
               onClick={viewAllPrompt}

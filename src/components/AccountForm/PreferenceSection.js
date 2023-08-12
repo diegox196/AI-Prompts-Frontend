@@ -87,7 +87,7 @@ const PreferenceSection = ({ userData, handleChange, showToastSaved, updateDataU
         </div>
 
         <div className="flex space-x-4 mt-4">
-          <LoadingButton isLoading={isLoading} btnText={"Save All"} loadingText={"Saving..."} />
+          <LoadingButton isLoading={isLoading} btnText={"Save"} loadingText={"Saving..."} />
         </div>
       </form>
     </section>

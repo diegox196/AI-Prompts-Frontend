@@ -104,7 +104,7 @@ const ChangePasswordSection = ({ user, handleChange, showToastSaved }) => {
         </div>
 
         <div className="flex space-x-4">
-          <LoadingButton isLoading={isLoading} btnText={"Save All"} loadingText={"Saving..."} />
+          <LoadingButton isLoading={isLoading} btnText={"Save"} loadingText={"Saving..."} />
         </div>
       </form>
     </section>

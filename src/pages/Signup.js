@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import Alert from '../components/Alert';
+import LoadingButton from '../components/LoadingButton';
 
 /**
  * Signup page for user registration
@@ -22,6 +23,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isSavedUser, setIsSavedUser] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   /**
    * Function to handle form input changes.
@@ -70,6 +72,7 @@ const Signup = () => {
       return;
     }
 
+    setIsLoading(true);
     const isSaved = await createNewUser(formData);
     if (isSaved.error) {
       setErrorMessage(isSaved.error);
@@ -223,12 +226,8 @@ const Signup = () => {
           <Link to={"/"} type="button" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
             Cancel
           </Link>
-          <button
-            type="submit"
-            className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            Save
-          </button>
+          
+          <LoadingButton isLoading={isLoading} btnText={"Save"} loadingText={"Saving..."} />
           {isSavedUser && <Navigate to={"/"} replace={true} />}
         </div>
       </form>
