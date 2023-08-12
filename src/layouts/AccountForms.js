@@ -37,7 +37,8 @@ const AccountForms = ({ name, updateName }) => {
         const newData = response.data;
         setUserData(newData);
       } catch (error) {
-        console.error(error);
+        console.log(error);
+        console.error('Error al obtener los datos del usuario:', error);
       }
     };
 
@@ -48,20 +49,12 @@ const AccountForms = ({ name, updateName }) => {
 
     const { name, value, type, checked } = e.target;
 
-    if (type === 'password') {
-      setChangePassword((prevData) => ({
-        ...prevData,
-        [name]: value
-      }));
-    } else {
+    const newValue = (type === 'checkbox') ? checked : value;
 
-      const newValue = (type === 'checkbox') ? checked : value;
-
-      setUserData((prevData) => ({
-        ...prevData,
-        [name]: newValue
-      }));
-    }
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: newValue
+    }));
   };
 
   /**
@@ -111,7 +104,7 @@ const AccountForms = ({ name, updateName }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4">
         <PreferenceSection userData={userData} handleChange={handleChange} showToastSaved={showToastSaved} updateDataUser={updateDataUser} />
-        <ChangePasswordSection handleChange={handleChange} showToastSaved={showToastSaved} />
+        <ChangePasswordSection userData={userData} showToastSaved={showToastSaved} />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import LoadingButton from '../LoadingButton';
 import Alert from '../Alert';
 import axios from 'axios';
 
-const ChangePasswordSection = ({ user, handleChange, showToastSaved }) => {
+const ChangePasswordSection = ({ userData, showToastSaved }) => {
 
   const initPassword = {
     current_password: "",
@@ -23,7 +23,7 @@ const ChangePasswordSection = ({ user, handleChange, showToastSaved }) => {
   */
   const updateUserPassword = async (body) => {
     try {
-      const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/users/${user.user_id}/update-password`, body, {
+      const response = await axios.patch(`${process.env.REACT_APP_API_URI}/api/users/${userData._id}/update-password`, body, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
@@ -32,6 +32,16 @@ const ChangePasswordSection = ({ user, handleChange, showToastSaved }) => {
     } catch (error) {
       return error.response.data;
     }
+  };
+
+  const handleChange = (e) => {
+
+    const { name, value } = e.target;
+
+    setChangePassword((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
   };
 
   const handleSubmitChangePassword = async (e) => {
