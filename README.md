@@ -2,6 +2,28 @@
 
 AI Prompts is a web application that generates creative prompts using artificial intelligence.
 
+Por supuesto, aquí tienes un índice enlazado a los títulos con formato Markdown:
+
+## Index
+
+- [AI Prompts](#ai-prompts)
+  - [Index](#index)
+  - [Getting Started](#getting-started)
+    - [Step 1: Clone the Repository](#step-1-clone-the-repository)
+    - [Step 2: Install Dependencies](#step-2-install-dependencies)
+    - [Step 3: Create .env File](#step-3-create-env-file)
+    - [Step 4: Start the Development Server](#step-4-start-the-development-server)
+  - [Features](#features)
+  - [Technologies Used](#technologies-used)
+  - [Screenshots](#screenshots)
+    - [Login](#login)
+    - [Verify account](#verify-account)
+    - [2FA](#2fa)
+    - [Prompts](#prompts)
+    - [Run Image Prompt](#run-image-prompt)
+    - [Account Settings](#account-settings)
+    - [Admin dashboard](#admin-dashboard)
+
 ## Getting Started
 
 To run AI Prompts locally, follow these steps:
@@ -70,4 +92,28 @@ This will launch the AI Prompts application in your default web browser in `http
 - **Tailwind CSS:** A utility-first CSS framework for styling components.
  
 - **React Router:** For handling routing and navigation in the application.
+
+
+## Screenshots
+
+### Login
+![Login.](./screenshots/login.png )
+
+### Verify account
+![Verify account.](./screenshots/verify_account.png)
+
+### 2FA
+![Two-Factor Authtentication.](./screenshots/2fa.png)
+
+### Prompts
+![Prompts.](./screenshots/prompts.png)
+
+### Run Image Prompt
+![Run Image Prompt.](./screenshots/run_image_prompt.png)
+
+### Account Settings
+![Account Settings.](./screenshots/account_settings.png)
+
+### Admin dashboard 
+![Admin dashboard.](./screenshots/users.png)
 
