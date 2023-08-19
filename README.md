@@ -103,7 +103,7 @@ This will launch the AI Prompts application in your default web browser in `http
 ![Verify account.](./screenshots/verify_account.png)
 
 ### 2FA
-![Two-Factor Authtentication.](./screenshots/2fa.png)
+![Two-Factor Authtentication.](./screenshots/2FA.png)
 
 ### Prompts
 ![Prompts.](./screenshots/prompts.png)
