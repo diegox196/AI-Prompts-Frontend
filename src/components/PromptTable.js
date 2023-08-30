@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EmptyState from './EmptyState';
 import HeaderWithFilter from './HeaderWithFilter';
+import SkeletonTable from './SkeletonTable';
+import ProgressBar from './ProgressBar';
 
 /**
  * PromptTable component.
@@ -12,45 +14,111 @@ import HeaderWithFilter from './HeaderWithFilter';
 const PromptTable = ({ handleClick }) => {
 
   const [promptData, setPromptData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
 
   const user = JSON.parse(sessionStorage.getItem("user"));
 
-  useEffect(() => {
-    const getPromptsByUserID = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URI}/api/prompts/user/${user.user_id}`, {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+  const searchUserPromptsByName = async (body) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/api/prompts/graphql`, body, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
+      const arrayPrompts = response.data.data.searchUserPromptsByName;
+      setPromptData(arrayPrompts);
+      setIsLoading(false);
+
+    } catch (error) {
+      console.error('Error fetching prompt data:', error);
+      setIsEmpty(true);
+    }
+  };
+
+  const searchUserPromptsByTag = async (body) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/api/prompts/graphql`, body, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
+      const arrayPrompts = response.data.data.searchUserPromptsByTag;
+      setPromptData(arrayPrompts);
+      setIsLoading(false);
+
+    } catch (error) {
+      console.error('Error fetching prompt data:', error);
+      setIsEmpty(true);
+    }
+  };
+
+  const getPromptsByUserID = async () => {
+    try {
+      setIsLoading(true);
+      const body = {
+        query: `
+          {
+            getPromptsByUserId(user_id: "${user.user_id}"){
+              _id
+              type
+              name
+              tags
+            }
           }
-        });
-        setPromptData(response.data);
-        setIsEmpty(response.data.length === 0);
-
-      } catch (error) {
-        console.error('Error fetching prompt data:', error);
-        setIsEmpty(true);
+        `,
       }
-    };
+      const response = await axios.post(`${process.env.REACT_APP_GRAPHQL_URI}/api/prompts/graphql`, body, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
+      const arrayPrompts = response.data.data.getPromptsByUserId;
 
+      const dataLength = arrayPrompts.length;
+      const value = (dataLength === 0) ? null : arrayPrompts;
+      setPromptData(value);
+      setIsEmpty(dataLength === 0);
+      setIsLoading(false);
+
+    } catch (error) {
+      console.error('Error fetching prompt data:', error);
+      setIsEmpty(true);
+    }
+  };
+
+  useEffect(() => {
     getPromptsByUserID();
   }, []);
 
   return (
     <>
-      {isEmpty && <EmptyState item={"users"} />}
+      {(!isEmpty && !promptData) && <SkeletonTable numRows={4} showFilters={true} />}
+      {isEmpty && <EmptyState item={"prompts"} />}
       {promptData &&
         <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
           <div className="rounded-lg bg-white dark:bg-gray-800">
-            <HeaderWithFilter nResult={promptData.length} />
+            <HeaderWithFilter
+              nResult={promptData.length}
+              userId={user.user_id}
+              getPromptsByUserID={getPromptsByUserID}
+              searchUserPromptsByName={searchUserPromptsByName}
+              searchUserPromptsByTag={searchUserPromptsByTag}
+            />
+
+
+            <ProgressBar isLoading={isLoading} />
+
             <div className="overflow-x-auto shadow-md">
-              <table className="w-full  dark:text-white">
+              <table className="w-full dark:text-white">
                 <thead>
-                  <tr className="bg-gray-50 dark:bg-gray-700 dark:text-gray-100">
-                    <th className="py-2 px-4">Name</th>
-                    <th className="py-2 px-4">Type</th>
-                    <th className="py-2 px-4">Tags</th>
-                    <th className="py-2 px-4">Actions</th>
+                  <tr className="bg-gray-100 dark:bg-gray-700 dark:text-gray-100">
+                    <th className="pb-2 px-4">Name</th>
+                    <th className="pb-2 px-4">Type</th>
+                    <th className="pb-2 px-4">Tags</th>
+                    <th className="pb-2 px-4">Actions</th>
                   </tr>
                 </thead>
                 <tbody  >

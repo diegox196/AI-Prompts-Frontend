@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import UserForm from '../components/UserForm';
+import UserForm from './UserForm';
 import axios from 'axios';
 
 /**
@@ -17,6 +17,8 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
     "password": "",
     "first_name": "",
     "last_name": "",
+    "phone_number": "",
+    "two_factor_enabled": false,
     "active": false,
     "role": "user",
   };
@@ -69,7 +71,11 @@ const CreateReadEditUser = ({ action, userId, goAllUsers }) => {
    */
   const createNewUser = async (newData) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/users`, newData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/users`, newData, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("auth")}`
+        }
+      });
       return response.data;
     } catch (error) {
       return error.response.data;

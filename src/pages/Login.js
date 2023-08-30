@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Alert from '../components/Alert';
 import LoadingButton from '../components/LoadingButton';
 
@@ -12,6 +12,8 @@ import LoadingButton from '../components/LoadingButton';
  */
 const Login = ({ handleLogin }) => {
 
+  sessionStorage.removeItem('user');
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -19,6 +21,7 @@ const Login = ({ handleLogin }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,8 +37,14 @@ const Login = ({ handleLogin }) => {
     try {
       setIsLoading(true);
       const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/sessions`, formData);
-      handleLogin(response.data.tokenSession);
       sessionStorage.setItem("user", JSON.stringify(response.data.user));
+
+      if (response.data.user.two_factor_enabled) {
+        navigate(`/verify-2fa?email=${formData.email}&auth=${response.data.tokenSession}`);
+      } else {
+        handleLogin(response.data.tokenSession);
+        navigate("/dashboard");
+      }
     } catch (err) {
       setError(err.response ? err.response.data.error : err.message);
     }
@@ -43,12 +52,12 @@ const Login = ({ handleLogin }) => {
   };
 
   return (
-    <div className="flex min-h-[100vh] flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <section className="flex min-h-[100vh] flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto"
-          src="https://flowbite.com/docs/images/logo.svg"
-          alt="Your Company"
+          src="/logo.svg"
+          alt="AI Prompt"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
           Sign in to your account
@@ -72,6 +81,7 @@ const Login = ({ handleLogin }) => {
                 autoComplete="email"
                 value={formData.email}
                 onChange={handleChange}
+                placeholder="name@company.com"
                 required
                 className="block w-full rounded-md border-0 px-2 py-1.5 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
               />
@@ -91,10 +101,17 @@ const Login = ({ handleLogin }) => {
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
+                placeholder="••••••••"
                 required
                 className="block w-full rounded-md border-0 px-2 py-1.5 dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
               />
             </div>
+          </div>
+
+          <div className="flex items-end">
+            <Link to={"/forgot-password"} className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+              Forgot password?
+            </Link>
           </div>
 
           <div>
@@ -109,7 +126,7 @@ const Login = ({ handleLogin }) => {
           </Link>
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

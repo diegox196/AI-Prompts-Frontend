@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import PlayPrompt from '../components/PlayPrompt';
+import PlayPrompt from './PlayPrompt';
+import SkeletonPlayPrompt from '../components/SkeletonPlayPrompt';
 
 /**
  * ViewPrompt component.
@@ -33,7 +34,10 @@ const ViewPrompt = ({ promptId, goAllPrompts }) => {
   }, [promptId]);
 
   return (
-    promptData && <PlayPrompt promptData={promptData} goAllPrompts={goAllPrompts} />
+    <>
+      {!promptData && <SkeletonPlayPrompt />}
+      {promptData && <PlayPrompt promptData={promptData} goAllPrompts={goAllPrompts} />}
+    </>
   );
 };
 

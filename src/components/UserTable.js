@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EmptyState from './EmptyState';
+import SkeletonTable from './SkeletonTable';
 
 /**
  * UserTable component.
@@ -28,8 +29,12 @@ const UserTable = ({ handleClick }) => {
           Authorization: `Bearer ${sessionStorage.getItem("auth")}`
         }
       });
-      setUserData(response.data);
-      setIsEmpty(response.data.length === 0);
+
+      const dataLength = response.data.length;
+      const value = (dataLength === 0) ? null : response.data;
+      setUserData(value);
+      setIsEmpty(dataLength === 0);
+
     } catch (error) {
       console.error('Error fetching user data:', error);
       setIsEmpty(true);
@@ -38,13 +43,14 @@ const UserTable = ({ handleClick }) => {
 
   return (
     <>
+      {(!isEmpty && !userData) && <SkeletonTable numRows={4} showFilters={false} />}
       {isEmpty && <EmptyState item={"users"} />}
       {userData &&
         <div className="w-full max-w-screen-xl px-4 py-4 mx-auto lg:px-12">
           <div className="overflow-x-auto shadow-md rounded-lg">
             <table className="w-full bg-white dark:bg-gray-800 dark:text-white">
               <thead>
-                <tr className="bg-gray-50 dark:bg-gray-700 dark:text-gray-100">
+                <tr className="bg-gray-100 dark:bg-gray-700 dark:text-gray-100">
                   <th className="py-2 px-4">Name</th>
                   <th className="py-2 px-4">Email</th>
                   <th className="py-2 px-4">Status</th>

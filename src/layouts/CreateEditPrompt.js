@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import PromptForm from '../components/PromptForm';
+import PromptForm from './PromptForm';
 
 /**
 * CreateEditPrompt page.
