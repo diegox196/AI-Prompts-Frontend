@@ -2,8 +2,6 @@
 
 AI Prompts is a web application that generates creative prompts using artificial intelligence.
 
-Por supuesto, aquí tienes un índice enlazado a los títulos con formato Markdown:
-
 ## Index
 
 - [AI Prompts](#ai-prompts)
